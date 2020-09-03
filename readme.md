@@ -1,5 +1,5 @@
 # About
-This is a front end template for photo stores. Similar concept like Pixabay. It can be used as perfect free photo hosting websites.
+This is a django project to host photo store websites. It includes similar concept like pixaby but with different UI and different backend algorithm.
 
 # Features
 * Beautiful Home Page
@@ -22,6 +22,7 @@ This is a front end template for photo stores. Similar concept like Pixabay. It 
 
 # Admin Details
 **User:** photobay
+
 **Pass:** photobay
 
 
