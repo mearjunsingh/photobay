@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Login to Photobay{% endblock %}
+
+{% block content %}
+
+<div class="w3-container w3-center"  style="margin: 130px auto; width: 400px;">
+<div class="w3-card-4">
+
+    <form class="w3-container" method="post" action=".">
+        <div class="w3-section">
+
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                {% for n_error in form.non_field_errors %}
+                    <div class="w3-text-red">{{ n_error|escape }}</div>
+                {% endfor %}
+            {% endif %}
+
+            {% for form_field in form %}
+                <strong>{{ form_field.label_tag }}</strong>
+
+                {% if form_field.errors %}
+                    {% for error in form_field.errors %}
+                        <div class="w3-text-red">{{ error|escape }}</div>
+                    {% endfor %}
+                {% endif %}
+
+                {{ form_field }}
+
+                {% if form_field.help_text %}
+                    <div class="w3-text-gray">{{ field.help_text|safe }}</div>
+                {% endif %}
+
+            {% endfor %}
+
+            <button class="w3-button w3-block w3-green w3-section w3-padding" type="submit">Login</button>
+            
+        </div>
+    </form>
+
+</div>
+</div>
+{% endblock %}

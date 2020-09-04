@@ -1,0 +1,107 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %}</title>
+    
+    <!-- META SEO Tags -->
+    
+    <!-- Facebook -->
+    
+    <!-- Twitter -->
+
+    <link rel="icon" href="#">
+    <link rel="stylesheet" href="{% static 'css/w3.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+</head>
+<body>
+
+<!-- Navbar -->
+<div class="w3-top">
+   <div class="w3-bar w3-black w3-card">
+      <div class="w3-container">
+      
+      <a class="w3-bar-item w3-button w3-padding-large w3-hide-large w3-left" href="javascript:void(0)" onclick="mobileNav()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+      
+      <a href="#" class="w3-bar-item w3-padding"><img src="images/logo.png" alt="PN"/></a>
+      <a href="#" class="w3-bar-item w3-button w3-padding-large w3-hide-small w3-hide-medium">LANDSCAPE</a>
+      <a href="#" class="w3-bar-item w3-button w3-padding-large w3-hide-small w3-hide-medium">OBJECT</a>
+      <a href="#" class="w3-bar-item w3-button w3-padding-large w3-hide-small w3-hide-medium">PEOPLE</a>
+      <a href="#" class="w3-bar-item w3-button w3-padding-large w3-hide-small w3-hide-medium">ARCHITECTURE</a>
+
+      <div class="w3-dropdown-click w3-hide-small w3-left">
+       <button onclick="explore()" class="w3-padding-large w3-button" style="outline:none;" title="More">EXPLORE <i class="fa fa-caret-down"></i></button>
+       <div id="explore" class="w3-dropdown-content w3-bar-block w3-card-4">
+       
+           <a href="#" class="w3-bar-item w3-button">Cameras</a>
+           <a href="#" class="w3-bar-item w3-button">Artists</a>
+           <a href="#" class="w3-bar-item w3-button">Locations <span class="w3-badge w3-red w3-small">New</span> </a>
+       
+        </div>
+        </div>
+        
+        <a href="{% url 'signup' %}" class="w3-bar-item w3-button w3-padding-large w3-right">Sign Up</a>
+        <a href="{% url 'login' %}" class="w3-bar-item w3-button w3-padding-large w3-right">Log In</a>
+        
+     </div>
+   </div>
+
+   {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+
+
+</div>
+<!-- Navbar End -->
+
+<!-- mobile navbar -->
+<div id="mobileNav" class="w3-bar-block w3-black w3-hide w3-hide-large w3-top" style="margin-top:46px">
+ 
+ <a href="#" class="w3-bar-item w3-button w3-padding-large" onclick="mobileNav()">LANDSCAPE</a>
+ <a href="#" class="w3-bar-item w3-button w3-padding-large" onclick="mobileNav()">OBJECT</a>
+ <a href="#" class="w3-bar-item w3-button w3-padding-large" onclick="mobileNav()">PEOPLE</a>
+ <a href="#" class="w3-bar-item w3-button w3-padding-large" onclick="mobileNav()">ARCHITECTURE</a>
+ <hr class="w3-hide-medium"/>
+ <a href="#" class="w3-bar-item w3-button w3-padding-large w3-hide-medium" onclick="mobileNav()">Cameras</a>
+ <a href="#" class="w3-bar-item w3-button w3-padding-large  w3-hide-medium" onclick="mobileNav()">Artists</a>
+ <a href="#" class="w3-bar-item w3-button w3-padding-large  w3-hide-medium" onclick="mobileNav()">Locations <span class="w3-badge w3-red w3-small">New</span> </a>
+      
+</div>
+<!-- mobile navbar end -->
+
+
+
+{% block content %}{% endblock %}
+
+
+
+
+
+   <!--footer-->
+   <footer class="w3-container w3-padding w3-light-grey w3-center w3-xlarge"> 
+
+    <p class="w3-medium">
+        
+        Made with <i class="fa fa-heart w3-text-red"></i> from NEPAL <br/>
+        &copy; 2019 - <span id="footeryear"></span> | <a class="w3-text-green w3-hover-text-red" style="text-decoration:none;" href="">Terms and Conditions</a> | <a class="w3-text-green w3-hover-text-red" style="text-decoration:none;" href="">Privacy Policy</a> | All Rights Reserved.
+        
+    </p>
+  
+  </footer>
+  <!--footer end-->
+  
+      
+      <script src="{% static 'js/script.js' %}" type="text/javascript"></script>
+      
+  </body>
+  </html>
