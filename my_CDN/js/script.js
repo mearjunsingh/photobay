@@ -22,59 +22,13 @@ function explore() {
 
 
 
-//for account box
-var modal = document.getElementById('account_box');
-//for register box
-var rmodal = document.getElementById('register_box');
-
-//open on click
-function account_box_open() {
-    modal.style.display='block';
-}
-
-
-//close on cross click
-function box_close() {
-    modal.style.display='none';
-    rmodal.style.display='none';
-}
-
-
-
-//close on anywhere click
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-  if (event.target == rmodal) {
-    rmodal.style.display = "none";
-  }
-}
-
-
-function goto_login_box() {
-    rmodal.style.display='none';
-    modal.style.display='block';
-}
-
-function goto_register_box() {
-    rmodal.style.display='block';
-    modal.style.display='none';
-}
-
-
-
-
 //year for footer
 var footeryear = new Date().getFullYear();
 document.getElementById("footeryear").innerHTML = footeryear;
 
 
 
-
-
 //category filter in discover page
-
 // Dropdown
 function cat_filter_drop() {
   var x = document.getElementById("cat_filter");
@@ -84,7 +38,6 @@ function cat_filter_drop() {
     x.className = x.className.replace(" w3-show", "");
   }
 }
-
 // Filter
 function cat_filter() {
   var input, filter, ul, li, a, i;
@@ -104,13 +57,7 @@ function cat_filter() {
 
 
 
-
-
-
-
-
 //status filter in discover page
-
 // Dropdown
 function stat_filter_drop() {
   var x = document.getElementById("stat_filter");
@@ -123,12 +70,7 @@ function stat_filter_drop() {
 
 
 
-
-
-
-
 //ort filter in discover page
-
 // Dropdown
 function ort_filter_drop() {
   var x = document.getElementById("ort_filter");
@@ -138,10 +80,6 @@ function ort_filter_drop() {
     x.className = x.className.replace(" w3-show", "");
   }
 }
-
-
-
-
 
 
 
@@ -165,12 +103,7 @@ function Emailshare() {
 
 
 
-
-
-
-
 //related tab
-
 function relatedtab(evt, tab) {
   var i, x, tablinks;
   x = document.getElementsByClassName("tab");
@@ -187,10 +120,7 @@ function relatedtab(evt, tab) {
 
 
 
-
-
-
-// User account Accordion
+// User Profile Accordion
 function user_acc(id) {
   var x = document.getElementById(id);
   if (x.className.indexOf("w3-show") == -1) {

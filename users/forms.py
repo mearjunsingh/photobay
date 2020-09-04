@@ -57,7 +57,14 @@ class UserSignupForm(UserCreationForm):
             'placeholder': 'Enter Password Again',
             }
         ))
-        
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        qs = User.objects.filter(email=email)
+        if qs.exists():
+            raise forms.ValidationError('A user with that email already exists.')
+        return email
+
     class Meta:
         model = User
         fields = ['first_name','last_name', 'email', 'username', 'password1', 'password2']
