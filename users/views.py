@@ -21,11 +21,14 @@ def login_page_view(request):
                 login(request, User)
                 messages.success(request, 'You are logged in.')
                 if 'next' in request.POST:
-                    return redirect(request.POST.get('next'))
+                    next_url = request.POST.get('next')
+                    return redirect(next_url)
                 else:
                     return redirect('index')
         else:
-            form = UserLoginForm(request.POST or None)
+            form = UserLoginForm()
+            if 'next' in request.GET:
+                messages.error(request, 'You must login first.')
         return render(request, 'login.html', {'form' : form})
 
 
@@ -37,7 +40,7 @@ def signup_page_view(request):
         form = UserSignupForm(request.POST or None)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Account Created Successfully.')
+            messages.success(request, 'Account created successfully.')
             return redirect('login')
         return render(request, 'register.html', {'form': form})
 
@@ -52,4 +55,4 @@ def logout_page_view(request):
 
 @login_required()
 def dashboard_page_view(request):
-    return render(request, 'users/user.html')
+    return render(request, 'register.html')

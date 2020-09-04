@@ -21,19 +21,19 @@ class UserLoginForm(AuthenticationForm):
 
 
 class UserSignupForm(UserCreationForm):
-    first_name = forms.CharField(label='Enter First Name', widget=forms.TextInput(
+    first_name = forms.CharField(label='First Name', widget=forms.TextInput(
         attrs={
             'class': 'w3-input w3-border w3-margin-bottom',
             'placeholder': 'Enter First Name',
             }
         ))
-    last_name = forms.CharField(label='Enter Last Name', widget=forms.TextInput(
+    last_name = forms.CharField(label='Last Name', widget=forms.TextInput(
         attrs={
             'class': 'w3-input w3-border w3-margin-bottom',
             'placeholder': 'Enter Last Name',
             }
         ))
-    email = forms.EmailField(label='Enter Email', widget=forms.EmailInput(
+    email = forms.EmailField(label='Email', widget=forms.EmailInput(
         attrs={
             'class': 'w3-input w3-border w3-margin-bottom',
             'placeholder': 'Enter Email',
@@ -42,10 +42,10 @@ class UserSignupForm(UserCreationForm):
     username = forms.CharField(label='Choose Username', widget=forms.TextInput(
         attrs={
             'class': 'w3-input w3-border w3-margin-bottom',
-            'placeholder': 'Choose Username',
+            'placeholder': 'Enter Username',
             }
         ))
-    password1 = forms.CharField(label='Enter Password', widget=forms.PasswordInput(
+    password1 = forms.CharField(label='Choose Password', widget=forms.PasswordInput(
         attrs={
             'class': 'w3-input w3-border w3-margin-bottom',
             'placeholder': 'Enter Password',
@@ -60,4 +60,4 @@ class UserSignupForm(UserCreationForm):
         
     class Meta:
         model = User
-        fields = ['first_name','last_name','username', 'email', 'password1', 'password2']
+        fields = ['first_name','last_name', 'email', 'username', 'password1', 'password2']
