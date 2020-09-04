@@ -35,6 +35,10 @@
 
             {% endfor %}
 
+            {% if request.GET.next %}
+                <input type="hidden" name="next" value="{{ request.GET.next }}">
+            {% endif%}
+            
             <button class="w3-button w3-block w3-green w3-section w3-padding" type="submit">Login</button>
             
         </div>

@@ -120,11 +120,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
-
 STATIC_ROOT = BASE_DIR / 'my_CDN'
 
 LOGIN_URL = '/login/'
+
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+    messages.INFO: 'w3-blue',
+    messages.SUCCESS: 'w3-green',
+    messages.ERROR: 'w3-red',
+    messages.WARNING: 'w3-yellow',
+}

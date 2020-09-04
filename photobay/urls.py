@@ -20,14 +20,16 @@ from photos.views import (
 )
 from users.views import (
     login_page_view,
+    logout_page_view,
     signup_page_view,
     dashboard_page_view,
 )
 
 urlpatterns = [
     path('', index_page_view, name='index'),
-    path('dashboard/', dashboard_page_view, name='dashboard'),
     path('login/', login_page_view, name='login'),
+    path('logout/', logout_page_view, name='logout'),
     path('signup/', signup_page_view, name='signup'),
+    path('dashboard/', dashboard_page_view, name='dashboard'),
     path('admin/', admin.site.urls),
 ]
