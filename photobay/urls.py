@@ -23,6 +23,9 @@ from users.views import (
     logout_page_view,
     signup_page_view,
     dashboard_page_view,
+    upload_page_view,
+    edit_page_view,
+    edit_profile_page_view,
 )
 
 urlpatterns = [
@@ -31,5 +34,8 @@ urlpatterns = [
     path('logout/', logout_page_view, name='logout'),
     path('signup/', signup_page_view, name='signup'),
     path('dashboard/', dashboard_page_view, name='dashboard'),
+    path('dashboard/upload/', upload_page_view, name='upload'),
+    path('dashboard/edit/<str:slug>/', edit_page_view, name='edit'),
+    path('dashboard/profile/', edit_profile_page_view, name='edit_profile'),
     path('admin/', admin.site.urls),
 ]

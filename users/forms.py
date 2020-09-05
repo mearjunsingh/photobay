@@ -60,9 +60,9 @@ class UserSignupForm(UserCreationForm):
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        qs = User.objects.filter(email=email)
-        if qs.exists():
-            raise forms.ValidationError('A user with that email already exists.')
+        qs = User.objects.filter(email=email).filter(is_active=True)
+        if qs.count() >= 3:
+            raise forms.ValidationError('Account creation with this email limited.')
         return email
 
     class Meta:

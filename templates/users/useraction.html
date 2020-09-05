@@ -1,134 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Discover Images on Peek Nepal</title>
-    
-    <!-- META SEO Tags -->
-    
-    <!-- Facebook -->
-    
-    <!-- Twitter -->
+{% extends 'base.html' %}
 
-    <link rel="icon" href="#">
-    <link rel="stylesheet" href="css/w3.css">
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-</head>
-<body>
+{% block title %}User Dashboard - Photobay{% endblock %}
 
-<!-- Navbar -->
-<div class="w3-top">
-   <div class="w3-bar w3-black w3-card">
-      <div class="w3-container">
-      
-      <a class="w3-bar-item w3-button w3-padding-large w3-hide-large w3-left" href="javascript:void(0)" onclick="mobileNav()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
-      
-      <a href="#" class="w3-bar-item w3-padding"><img src="images/logo.png" alt="PN"/></a>
-      <a href="#" class="w3-bar-item w3-button w3-padding-large w3-hide-small w3-hide-medium">LANDSCAPE</a>
-      <a href="#" class="w3-bar-item w3-button w3-padding-large w3-hide-small w3-hide-medium">OBJECT</a>
-      <a href="#" class="w3-bar-item w3-button w3-padding-large w3-hide-small w3-hide-medium">PEOPLE</a>
-      <a href="#" class="w3-bar-item w3-button w3-padding-large w3-hide-small w3-hide-medium">ARCHITECTURE</a>
+{% block content %}
 
-      <div class="w3-dropdown-click w3-hide-small w3-left">
-       <button onclick="explore()" class="w3-padding-large w3-button" style="outline:none;" title="More">EXPLORE <i class="fa fa-caret-down"></i></button>
-       <div id="explore" class="w3-dropdown-content w3-bar-block w3-card-4">
-       
-           <a href="#" class="w3-bar-item w3-button">Cameras</a>
-           <a href="#" class="w3-bar-item w3-button">Artists</a>
-           <a href="#" class="w3-bar-item w3-button">Locations <span class="w3-badge w3-red w3-small">New</span> </a>
-       
-        </div>
-        </div>
-       <a href="#" class="w3-bar-item w3-btn w3-hover-opacity w3-right">
-           <img class="w3-circle" src="images/img_avatar4.png" style="height:30px;">
-           Dashboard
-           </a>
-        
-     </div>
-   </div>
-</div>
-<!-- Navbar End -->
-
-<!-- mobile navbar -->
-<div id="mobileNav" class="w3-bar-block w3-black w3-hide w3-hide-large w3-top" style="margin-top:46px">
- 
- <a href="#" class="w3-bar-item w3-button w3-padding-large" onclick="mobileNav()">LANDSCAPE</a>
- <a href="#" class="w3-bar-item w3-button w3-padding-large" onclick="mobileNav()">OBJECT</a>
- <a href="#" class="w3-bar-item w3-button w3-padding-large" onclick="mobileNav()">PEOPLE</a>
- <a href="#" class="w3-bar-item w3-button w3-padding-large" onclick="mobileNav()">ARCHITECTURE</a>
- <hr class="w3-hide-medium"/>
- <a href="#" class="w3-bar-item w3-button w3-padding-large w3-hide-medium" onclick="mobileNav()">Cameras</a>
- <a href="#" class="w3-bar-item w3-button w3-padding-large  w3-hide-medium" onclick="mobileNav()">Artists</a>
- <a href="#" class="w3-bar-item w3-button w3-padding-large  w3-hide-medium" onclick="mobileNav()">Locations <span class="w3-badge w3-red w3-small">New</span> </a>
-      
-</div>
-<!-- mobile navbar end -->
-
-
-
-  
-
-
-
-
-
-
-<!-- Page Container -->
 <div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">    
 
-    <div class="w3-col s12 m4 l4">
-     
-     
-     
-     
-      <!-- Profile -->
-      <div class="w3-container w3-card w3-round">
-       
- 
-         <h4 class="w3-center">Baley Sarkar</h4>
-         
-         <p class="w3-center"><img src="images/img_avatar4.png" class="w3-circle" style="width:30%"></p>
-         <hr/>
-         <p><i class="fa fa-pencil fa-fw w3-margin-right"></i> Designer</p>
-         <p><i class="fa fa-home w3-margin-right"></i> Kathmandu, Nepal</p>
-         <p><i class="fa fa-birthday-cake w3-margin-right"></i> April 1, 2000</p>
-      </div>
-      <!-- Profile end -->
-      
-      
-      
-      <!-- Accordion -->
-      <div class="w3-card w3-round w3-section">
-
-          <button style="outline:none;" onclick="user_acc('not')" class="w3-button w3-block w3-left-align w3-light-grey"><i class="fa fa-bell w3-margin-right"></i> My Notifications <span class="w3-circle w3-small w3-badge w3-red">1</span></button>
-          
-          <div id="not" class="w3-hide w3-container">
-            <p>Some text..</p>
-          </div>
-          
-          <button style="outline:none;" onclick="user_acc('liked')" class="w3-button w3-block w3-left-align w3-light-grey"><i class="fa fa-heart w3-margin-right"></i> I Liked <span class="w3-circle w3-small w3-badge w3-green">34</span></button>
-          
-          <div id="liked" class="w3-hide w3-container">
-            <p>Some other text..</p>
-          </div>
-          
-          <button style="outline:none;" onclick="user_acc('saved')" class="w3-button w3-block w3-left-align w3-light-grey"><i class="fa fa-save w3-margin-right"></i> I Saved <span class="w3-circle w3-small w3-badge w3-green">34</span></button>
-          
-          <div id="saved" class="w3-hide w3-container">
-            <p>Some other text..</p>
-          </div> 
-   
-      </div>
-<!-- Accordion end-->
-    
-    <!-- End Left Column -->
-    </div>
-    
-    
-    
+  {% include 'users/sidebar.html' %} 
     
     <!-- Middle Column -->
     <div class="w3-col s12 m8 l8">
@@ -191,27 +69,6 @@
       
     <!-- End Middle Column -->
     </div>
-
   </div>
-  
-
-
-   
-   <!--footer-->
-<footer class="w3-container w3-padding w3-light-grey w3-center w3-xlarge"> 
-
-  <p class="w3-medium">
-      
-      Made with <i class="fa fa-heart w3-text-red"></i> from NEPAL <br/>
-      &copy; 2019 - <span id="footeryear"></span> | <a class="w3-text-green w3-hover-text-red" style="text-decoration:none;" href="">Terms and Conditions</a> | <a class="w3-text-green w3-hover-text-red" style="text-decoration:none;" href="">Privacy Policy</a> | All Rights Reserved.
-      
-  </p>
-
-</footer>
-<!--footer end-->
-
-
-    <script src="js/script.js" type="text/javascript"></script>
-    
-</body>
-</html>
+ 
+  {% endblock %}

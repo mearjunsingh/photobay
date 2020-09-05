@@ -53,6 +53,22 @@ def logout_page_view(request):
         messages.warning(request, 'You are logged out.')
         return redirect('index')
 
+
 @login_required()
 def dashboard_page_view(request):
-    return render(request, 'register.html')
+    return render(request, 'users/user.html')
+
+
+@login_required()
+def upload_page_view(request):
+    return render(request, 'users/useraction.html')
+
+
+@login_required()
+def edit_profile_page_view(request):
+    return render(request, 'users/useraction.html')
+
+
+@login_required()
+def edit_page_view(request, slug):
+    return render(request, 'users/useraction.html')
