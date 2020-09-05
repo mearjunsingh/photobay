@@ -21,6 +21,8 @@ class Photo(models.Model):
     tags = models.TextField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     active = models.BooleanField(default=True)
+    download_count = models.IntegerField(default=0)
+    views_count = models.IntegerField(default=0)
     modified_on = models.DateTimeField(auto_now=True)
     uploaded_on = models.DateTimeField(auto_now_add=True)
 
@@ -56,3 +58,14 @@ class Location(models.Model):
 
     def __str__(self):
         return self.location
+
+
+class Like(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    photo = models.ForeignKey('Photo', on_delete=models.CASCADE)
+
+    def __str__(self):
+        p_user = self.user.username
+        p_name = self.photo.title[:10]
+        p_str = f'{p_user} -> {p_name}'
+        return p_str

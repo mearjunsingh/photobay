@@ -5,9 +5,11 @@ from django.contrib import messages
 from django.http import Http404
 from django.contrib.auth.decorators import login_required
 from photos.forms import UploadForm, EditForm
-from photos.models import Photo, Camera, Location
+from photos.models import Photo, Camera, Location, Like
 from pathlib import Path
 from .unique_slug import unique_slug
+from django.core.paginator import Paginator
+from django.db.models import Q
 # Create your views here.
 
 
@@ -60,7 +62,33 @@ def logout_page_view(request):
 
 @login_required()
 def dashboard_page_view(request):
-    return render(request, 'users/user.html')
+    if 'search' in request.GET:
+        search_term = request.GET.get('search')
+        b_url = '?search=' + search_term + '&'
+        photos_list = Photo.objects.filter(active=True).filter(user=request.user).filter(
+                Q(title__icontains = search_term) | 
+                Q(tags__icontains = search_term) | 
+                Q(category__category__icontains = search_term) | 
+                Q(camera__camera__icontains = search_term) | 
+                Q(location__location__icontains = search_term)).order_by('-uploaded_on')
+    else:
+        b_url = '?'
+        photos_list = Photo.objects.filter(active=True).filter(user=request.user).order_by('-uploaded_on')
+    if photos_list.count() != 0:
+        paginator = Paginator(photos_list, 6)
+        if 'page' in request.GET:
+            q = request.GET['page']
+            if q is not None and q != '' and q != '0':
+                page_number = request.GET.get('page')
+            else:
+                page_number = 1
+        else:
+            page_number = 1
+        data = paginator.get_page(page_number)
+        like_count = 0
+        return render(request, 'users/user.html', {'data' : data, 'base_url' : b_url, 'like_count' : like_count})
+    else:
+        return render(request, 'users/user.html', {'no_posts_found' : 'no_posts_found'})
 
 
 @login_required()
@@ -139,7 +167,6 @@ def edit_page_view(request, slug):
             return redirect('dashboard')
     else:
         data = get_object_or_404(Photo, slug=slug, active=True)
-        print(data)
         param = {
             'title' : data.title,
             'category' : data.category,
