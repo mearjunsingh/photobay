@@ -125,7 +125,13 @@ STATICFILES_DIRS = [
 ]
 STATIC_ROOT = BASE_DIR / 'my_CDN'
 
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'uploads'
+
+
 LOGIN_URL = '/login/'
+
 
 from django.contrib.messages import constants as messages
 MESSAGE_TAGS = {

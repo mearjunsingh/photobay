@@ -1,9 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import UserLoginForm, UserSignupForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.http import Http404
 from django.contrib.auth.decorators import login_required
+from photos.forms import UploadForm
+from photos.models import Photo
 # Create your views here.
 
 
@@ -61,7 +63,15 @@ def dashboard_page_view(request):
 
 @login_required()
 def upload_page_view(request):
-    return render(request, 'users/useraction.html')
+    if request.method == 'POST':
+        form = UploadForm(request.POST, request.FILES)
+        if form.is_valid:
+            #form.save()
+            messages.success(request, 'Photo uploaded successfully.')
+            return redirect('dashboard')
+    else:
+        form = UploadForm()
+    return render(request, 'users/upload_edit.html', {'form' : form})
 
 
 @login_required()
@@ -71,4 +81,13 @@ def edit_profile_page_view(request):
 
 @login_required()
 def edit_page_view(request, slug):
-    return render(request, 'users/useraction.html')
+    if request.method == 'POST':
+        form = UploadForm(request.POST, request.FILES)
+        if form.is_valid:
+            #form.save()
+            messages.success(request, 'Photo uploaded successfully.')
+            return redirect('dashboard')
+    else:
+        data = get_object_or_404(Photo, slug=slug)
+        form = UploadForm(data)
+    return render(request, 'users/upload_edit.html', {'form' : form})
