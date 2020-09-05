@@ -1,11 +1,13 @@
-from pathlib import Path
 from django.db import models
 from django.contrib.auth.models import User
+import uuid
 
 # Create your models here.
 
 def upload_image_path(instance, filename):
-    return '{0}/images/{1}'.format(instance.user.username, filename)
+    ext = filename.split('.')[-1]
+    filename = '%s.%s' % (uuid.uuid4(), ext)
+    return '{0}/{1}'.format(instance.user.username, filename)
 
 
 class Photo(models.Model):
@@ -14,10 +16,11 @@ class Photo(models.Model):
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
     image = models.ImageField(upload_to=upload_image_path)
     image_type = models.CharField(max_length=10)
-    camera = models.CharField(max_length=254)
-    location = models.CharField(max_length=254)
+    camera = models.ForeignKey('Camera', on_delete=models.CASCADE)
+    location = models.ForeignKey('Location', on_delete=models.CASCADE)
     tags = models.TextField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    active = models.BooleanField(default=True)
     modified_on = models.DateTimeField(auto_now=True)
     uploaded_on = models.DateTimeField(auto_now_add=True)
 

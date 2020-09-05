@@ -126,7 +126,7 @@ STATICFILES_DIRS = [
 STATIC_ROOT = BASE_DIR / 'my_CDN'
 
 
-MEDIA_URL = '/media/'
+MEDIA_URL = '/uploads/'
 MEDIA_ROOT = BASE_DIR / 'uploads'
 
 

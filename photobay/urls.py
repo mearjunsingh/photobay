@@ -27,6 +27,7 @@ from users.views import (
     dashboard_page_view,
     upload_page_view,
     edit_page_view,
+    delete_page_view,
     edit_profile_page_view,
 )
 
@@ -38,6 +39,7 @@ urlpatterns = [
     path('dashboard/', dashboard_page_view, name='dashboard'),
     path('dashboard/upload/', upload_page_view, name='upload'),
     path('dashboard/edit/<str:slug>/', edit_page_view, name='edit'),
+    path('dashboard/delete/', delete_page_view, name='delete'),
     path('dashboard/profile/', edit_profile_page_view, name='edit_profile'),
     path('admin/', admin.site.urls),
 ]

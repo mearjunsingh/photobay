@@ -8,12 +8,6 @@ class UploadForm(forms.ModelForm):
             'placeholder': 'Photo Title',
             }
         ))
-    slug = forms.SlugField(label='Slug', help_text='Use letters, numbers, underscores or hypens. Example: this-is-my-slug', widget=forms.TextInput(
-        attrs={
-            'class': 'w3-input w3-border w3-margin-bottom',
-            'placeholder': 'Photo Slug',
-            }
-        ))
     category = forms.ModelChoiceField(queryset=Category.objects.all(), label='Category', widget=forms.Select(
         attrs={
             'class': 'w3-input w3-border w3-margin-bottom',
@@ -24,13 +18,13 @@ class UploadForm(forms.ModelForm):
             'class': 'w3-input w3-border w3-margin-bottom',
             }
         ))
-    camera = forms.CharField(label='Camera', help_text='Write your own or choose from dropdown.', widget=forms.TextInput(
+    photo_camera = forms.CharField(label='Camera', widget=forms.TextInput(
         attrs={
             'class': 'w3-input w3-border w3-margin-bottom',
             'placeholder': 'Camera/Phone Model',
             }
         ))
-    location = forms.CharField(label='Location', help_text='Locations are relative.', widget=forms.TextInput(
+    photo_location = forms.CharField(label='Location', widget=forms.TextInput(
         attrs={
             'class': 'w3-input w3-border w3-margin-bottom',
             'placeholder': 'Location (City)',
@@ -40,9 +34,77 @@ class UploadForm(forms.ModelForm):
         attrs={
             'class': 'w3-input w3-border w3-margin-bottom',
             'placeholder': 'Separeted by comma',
+            'cols' : '0',
+            'rows' : '3',
             }
         ))
 
     class Meta:
         model = Photo
-        fields = ['title', 'slug', 'category', 'image', 'camera', 'location', 'tags']
+        fields = ['title', 'category', 'image', 'photo_camera', 'photo_location','tags']
+    
+    def clean_photo_camera(self):
+        data = self.cleaned_data.get('photo_camera')
+        data = data.strip()
+        if data == None or data == ' ' or data == '':
+            raise forms.ValidationError('This field is required.')
+        return data
+
+    def clean_photo_location(self):
+        data = self.cleaned_data.get('photo_location')
+        data = data.strip()
+        if data == None or data == ' ' or data == '':
+            raise forms.ValidationError('This field is required.')
+        return data
+
+
+class EditForm(forms.ModelForm):
+    title = forms.CharField(label='Title', widget=forms.TextInput(
+        attrs={
+            'class': 'w3-input w3-border w3-margin-bottom',
+            'placeholder': 'Photo Title',
+            }
+        ))
+    category = forms.ModelChoiceField(queryset=Category.objects.all(), label='Category', widget=forms.Select(
+        attrs={
+            'class': 'w3-input w3-border w3-margin-bottom',
+            }
+        ))
+    photo_camera = forms.CharField(label='Camera', widget=forms.TextInput(
+        attrs={
+            'class': 'w3-input w3-border w3-margin-bottom',
+            'placeholder': 'Camera/Phone Model',
+            }
+        ))
+    photo_location = forms.CharField(label='Location', widget=forms.TextInput(
+        attrs={
+            'class': 'w3-input w3-border w3-margin-bottom',
+            'placeholder': 'Location (City)',
+            }
+        ))
+    tags = forms.CharField(label='Tags', help_text='Use as many tags you want separeted by comma. It will help your photo to better indexing.', widget=forms.Textarea(
+        attrs={
+            'class': 'w3-input w3-border w3-margin-bottom',
+            'placeholder': 'Separeted by comma',
+            'cols' : '0',
+            'rows' : '3',
+            }
+        ))
+
+    class Meta:
+        model = Photo
+        fields = ['title', 'category', 'photo_camera', 'photo_location','tags']
+    
+    def clean_photo_camera(self):
+        data = self.cleaned_data.get('photo_camera')
+        data = data.strip()
+        if data == None or data == ' ' or data == '':
+            raise forms.ValidationError('This field is required.')
+        return data
+
+    def clean_photo_location(self):
+        data = self.cleaned_data.get('photo_location')
+        data = data.strip()
+        if data == None or data == ' ' or data == '':
+            raise forms.ValidationError('This field is required.')
+        return data
