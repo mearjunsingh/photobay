@@ -163,7 +163,7 @@ def edit_page_view(request, slug):
             data.camera = cam_obj
             data.location = loc_obj
             data.save()
-            messages.success(request, 'Photo uploaded successfully.')
+            messages.success(request, 'Photo updated successfully.')
             return redirect('dashboard')
     else:
         data = get_object_or_404(Photo, slug=slug, active=True)
