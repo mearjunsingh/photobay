@@ -19,6 +19,9 @@ from . import settings
 from django.conf.urls.static import static
 from photos.views import (
     index_page_view,
+    browse_page_view,
+    single_page_view,
+    profile_public_page_view,
 )
 from users.views import (
     login_page_view,
@@ -42,6 +45,9 @@ urlpatterns = [
     path('dashboard/delete/', delete_page_view, name='delete'),
     path('dashboard/profile/', edit_profile_page_view, name='edit_profile'),
     path('admin/', admin.site.urls),
+    path('browse/', browse_page_view, name='browse'),
+    path('<str:username>/', profile_public_page_view, name='public_profile'),
+    path('<str:username>/<str:slug>/', single_page_view, name='single'),
 ]
 
 if settings.DEBUG:

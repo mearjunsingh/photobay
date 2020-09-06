@@ -5,8 +5,7 @@ from django.contrib import messages
 from django.http import Http404
 from django.contrib.auth.decorators import login_required
 from photos.forms import UploadForm, EditForm
-from photos.models import Photo, Camera, Location, Like
-from pathlib import Path
+from photos.models import Photo, Camera, Location
 from .unique_slug import unique_slug
 from django.core.paginator import Paginator
 from django.db.models import Q
@@ -85,10 +84,9 @@ def dashboard_page_view(request):
         else:
             page_number = 1
         data = paginator.get_page(page_number)
-        like_count = 0
-        return render(request, 'users/user.html', {'data' : data, 'base_url' : b_url, 'like_count' : like_count})
+        return render(request, 'users/user.html', {'data' : data, 'base_url' : b_url})
     else:
-        return render(request, 'users/user.html', {'no_posts_found' : 'no_posts_found'})
+        return render(request, 'users/user.html', {'no_posts_found' : True})
 
 
 @login_required()
