@@ -1,33 +1,49 @@
 {% load static %}
-
 <div class="w3-col s12 m12 l4">
 
   <div class="w3-container w3-card w3-round">
-    <h4 class="w3-center">Baley Sarkar</h4>
-    <p class="w3-center"><img src="{% static 'images/img_avatar4.png' %}" class="w3-circle" style="width:30%"></p>
 
-    <hr/>
+    <h4 class="w3-center">{{ request.user.first_name }} {{ request.user.last_name }}<br><small class="w3-text-grey">{{ request.user.username }}</small></h4>
     
-    <p><i class="fa fa-pencil fa-fw w3-margin-right"></i> Designer</p>
-    <p><i class="fa fa-home w3-margin-right"></i> Kathmandu, Nepal</p>
-    <p><i class="fa fa-birthday-cake w3-margin-right"></i> April 1, 2000</p>
+    {% if request.user.profile_picture %}
+      <p class="w3-center"><img src="{{ request.user.profile_picture.url }}" class="w3-circle" style="width:30%"></p>
+    {% else %}
+      <p class="w3-center"><img src="{% static 'images/img_avatar4.png' %}" class="w3-circle" style="width:30%"></p>
+    {% endif %}
+    <hr/>
+
+    <p><i class="fa fa-envelope w3-margin-right"></i> {{ request.user.email }}</p>
+    {% if request.user.profession %}
+      <p><i class="fa fa-pencil w3-margin-right"></i> {{ request.user.profession }}</p>
+    {% endif %}
+    {% if request.user.address %}
+      <p><i class="fa fa-home w3-margin-right"></i> {{ request.user.address }}</p>
+    {% endif %}
+    {% if request.user.dob %}
+      <p><i class="fa fa-birthday-cake w3-margin-right"></i> {{ request.user.dob }}</p>
+    {% endif %}
+    
   </div>
 
   <div class="w3-card w3-round w3-section">
+
     <button style="outline:none;" onclick="user_acc('not')" class="w3-button w3-block w3-left-align w3-light-grey"><i class="fa fa-bell w3-margin-right"></i> My Notifications <span class="w3-circle w3-small w3-badge w3-red">1</span></button>
     <div id="not" class="w3-hide w3-container">
-      <p>Some text..</p>
+      <p>{{ request.user.fb_username }}</p>
     </div>
 
-    <button style="outline:none;" onclick="user_acc('liked')" class="w3-button w3-block w3-left-align w3-light-grey"><i class="fa fa-heart w3-margin-right"></i> I Liked <span class="w3-circle w3-small w3-badge w3-green">34</span></button>
+    <button style="outline:none;" onclick="user_acc('liked')" class="w3-button w3-block w3-left-align w3-light-grey"><i class="fa fa-heart w3-margin-right"></i> I Liked <span class="w3-circle w3-small w3-badge w3-green">{{ request.user.like_set.count }}</span></button>
     <div id="liked" class="w3-hide w3-container">
-      <p>Some other text..</p>
+      {% for like in request.user.like_set.all %}
+      <p><a style="text-decoration: none;" class="w3-link w3-text-green w3-hover-text-red" href="{% url 'single' like.photo.user like.photo.slug %}">{{ like.photo }}</a></p>
+      {% endfor %}
     </div>
 
     <button style="outline:none;" onclick="user_acc('saved')" class="w3-button w3-block w3-left-align w3-light-grey"><i class="fa fa-save w3-margin-right"></i> I Saved <span class="w3-circle w3-small w3-badge w3-green">34</span></button>
     <div id="saved" class="w3-hide w3-container">
-      <p>Some other text..</p>
-    </div> 
+      <p>{{ request.user.in_username }}</p>
+    </div>
+
   </div>
 
 </div>

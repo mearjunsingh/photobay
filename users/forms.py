@@ -1,7 +1,9 @@
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm, PasswordChangeForm
 from django import forms
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
+#completed
 class UserLoginForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
         super(UserLoginForm, self).__init__(*args, **kwargs)
@@ -19,7 +21,7 @@ class UserLoginForm(AuthenticationForm):
             }
         ))
 
-
+#completed
 class UserSignupForm(UserCreationForm):
     first_name = forms.CharField(label='First Name', widget=forms.TextInput(
         attrs={
@@ -58,13 +60,94 @@ class UserSignupForm(UserCreationForm):
             }
         ))
 
-    def clean_email(self):
-        email = self.cleaned_data.get('email')
-        qs = User.objects.filter(email=email).filter(is_active=True)
-        if qs.count() >= 3:
-            raise forms.ValidationError('Account creation with this email limited.')
-        return email
-
     class Meta:
         model = User
         fields = ['first_name','last_name', 'email', 'username', 'password1', 'password2']
+
+#completed
+class UserEditForm(UserChangeForm):
+    profile_picture = forms.ImageField(label='Profile Picture', help_text='Leaving empty will keep previous photo.', widget=forms.FileInput(
+        attrs={
+            'class': 'w3-input w3-border w3-margin-bottom',
+            }
+        ))
+    first_name = forms.CharField(label='First Name', widget=forms.TextInput(
+        attrs={
+            'class': 'w3-input w3-border w3-margin-bottom',
+            'placeholder': 'Enter First Name',
+            }
+        ))
+    last_name = forms.CharField(label='Last Name', widget=forms.TextInput(
+        attrs={
+            'class': 'w3-input w3-border w3-margin-bottom',
+            'placeholder': 'Enter Last Name',
+            }
+        ))
+    email = forms.EmailField(label='Email', widget=forms.EmailInput(
+        attrs={
+            'class': 'w3-input w3-border w3-margin-bottom',
+            'placeholder': 'Enter Email',
+            }
+        ))
+    profession = forms.CharField(label='Profession', required=False, widget=forms.TextInput(
+        attrs={
+            'class': 'w3-input w3-border w3-margin-bottom',
+            'placeholder': 'Enter Profession',
+            }
+        ))
+    address = forms.CharField(label='Address', required=False, widget=forms.TextInput(
+        attrs={
+            'class': 'w3-input w3-border w3-margin-bottom',
+            'placeholder': 'Enter Address',
+            }
+        ))
+    dob = forms.DateField(label='Date of Birth', required=False, widget=forms.DateInput(
+        attrs={
+            'class': 'w3-input w3-border w3-margin-bottom',
+            'type' : 'date',
+            }
+        ))
+    fb_username = forms.CharField(label='Facebook Username', required=False, widget=forms.TextInput(
+        attrs={
+            'class': 'w3-input w3-border w3-margin-bottom',
+            'placeholder': 'Enter Facebook Username',
+            }
+        ))
+    tw_username = forms.CharField(label='Twitter Username', required=False, widget=forms.TextInput(
+        attrs={
+            'class': 'w3-input w3-border w3-margin-bottom',
+            'placeholder': 'Enter Twitter Username',
+            }
+        ))
+    in_username = forms.CharField(label='Instagram Username', required=False, widget=forms.TextInput(
+        attrs={
+            'class': 'w3-input w3-border w3-margin-bottom',
+            'placeholder': 'Enter Instagram Username',
+            }
+        ))
+    password = None
+
+    class Meta:
+        model = User
+        fields = ['profile_picture','first_name', 'last_name', 'email', 'profession', 'address', 'dob', 'fb_username', 'tw_username', 'in_username']
+
+#completed
+class ChangePasswordForm(PasswordChangeForm):
+    old_password = forms.CharField(label='Old Password', widget=forms.PasswordInput(
+        attrs={
+            'class': 'w3-input w3-border w3-margin-bottom',
+            'placeholder': 'Enter Old Password',
+            }
+        ))
+    new_password1 = forms.CharField(label='New Password', widget=forms.PasswordInput(
+        attrs={
+            'class': 'w3-input w3-border w3-margin-bottom',
+            'placeholder': 'Enter New Password',
+            }
+        ))
+    new_password2 = forms.CharField(label='Confirm Password', widget=forms.PasswordInput(
+        attrs={
+            'class': 'w3-input w3-border w3-margin-bottom',
+            'placeholder': 'Confirm New Password',
+            }
+        ))

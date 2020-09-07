@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% load static %}
 
-{% block title %}Upload Photo - Photobay{% endblock %}
+{% block title %}{{ head }}{% endblock %}
 
 {% block content %}
 
@@ -8,7 +8,7 @@
 
   {% include 'users/sidebar.html' %}
 
-  <div class="w3-col s12 m8 l8">
+  <div class="w3-col s12 m12 l8">
 
     <div class="w3-container w3-round w3-light-grey w3-margin">
       <a href="{% url 'dashboard' %}" class="w3-button w3-section w3-hover-red w3-mobile w3-round w3-padding-large w3-green">Back to Dashboard</a>
@@ -61,6 +61,19 @@
                             {% csrf_token %}
                             <input type="hidden" name="slug" value="{{ slug }}">
                             <button class="w3-btn w3-block w3-red w3-section w3-padding w3-round" type="submit">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if secret_key %}
+                <div class="w3-container w3-section">
+                    <button id="delete_button" class="w3-btn w3-block w3-red w3-section w3-padding w3-round" onclick="toggle_delete()" type="button">Deactivate Profile</button>
+                    <div id="delete_confirm" class="w3-container w3-pale-red" style="visibility: hidden;">
+                        <p>Are you sure you want to deactivate this profile? <br> All your photos and likes will be inactive.</p>
+                        <form action="{% url 'deactivate_profile' %}" method="post">
+                            {% csrf_token %}
+                            <button class="w3-btn w3-block w3-red w3-section w3-padding w3-round" type="submit">Deactivate</button>
                         </form>
                     </div>
                 </div>

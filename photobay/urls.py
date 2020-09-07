@@ -32,6 +32,8 @@ from users.views import (
     edit_page_view,
     delete_page_view,
     edit_profile_page_view,
+    deactivate_profile_page_view,
+    change_password_view,
 )
 
 urlpatterns = [
@@ -44,9 +46,11 @@ urlpatterns = [
     path('dashboard/edit/<str:slug>/', edit_page_view, name='edit'),
     path('dashboard/delete/', delete_page_view, name='delete'),
     path('dashboard/profile/', edit_profile_page_view, name='edit_profile'),
+    path('dashboard/profile/password/', change_password_view, name='change_password'),
+    path('dashboard/profile/deactivate/', deactivate_profile_page_view, name='deactivate_profile'),
     path('admin/', admin.site.urls),
     path('browse/', browse_page_view, name='browse'),
-    path('<str:username>/', profile_public_page_view, name='public_profile'),
+    #path('<str:username>/', profile_public_page_view, name='public_profile'),
     path('<str:username>/<str:slug>/', single_page_view, name='single'),
 ]
 

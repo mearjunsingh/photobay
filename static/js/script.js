@@ -138,7 +138,7 @@ function user_acc(id) {
 // delete confirmation
 function toggle_delete() {
   var box = document.getElementById('delete_confirm');
-  var word = document.getElementById('delete_button')
+  var word = document.getElementById('delete_button');
   if (box.style.visibility == 'visible') {
     box.style.visibility = 'hidden';
     word.innerHTML = 'Delete';

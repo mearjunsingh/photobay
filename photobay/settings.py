@@ -140,3 +140,6 @@ MESSAGE_TAGS = {
     messages.ERROR: 'w3-red',
     messages.WARNING: 'w3-yellow',
 }
+
+
+AUTH_USER_MODEL = 'users.UserProfile'

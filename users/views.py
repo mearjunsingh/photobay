@@ -1,20 +1,21 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import UserLoginForm, UserSignupForm
-from django.contrib.auth import authenticate, login, logout
+from .forms import UserLoginForm, UserSignupForm, UserEditForm, ChangePasswordForm
+from django.contrib.auth import authenticate, login, logout, get_user_model, update_session_auth_hash
 from django.contrib import messages
 from django.http import Http404
 from django.contrib.auth.decorators import login_required
 from photos.forms import UploadForm, EditForm
 from photos.models import Photo, Camera, Location
-from .unique_slug import unique_slug
+from .custom_defs import unique_slug, get_or_create_object
 from django.core.paginator import Paginator
 from django.db.models import Q
+User = get_user_model()
 # Create your views here.
 
-
+#completed
 def login_page_view(request):
     if request.user.is_authenticated:
-        messages.info(request, 'You are already logged in.')
+        messages.error(request, 'You are already logged in.')
         return redirect('dashboard')
     else:
         if request.method == 'POST':
@@ -22,8 +23,8 @@ def login_page_view(request):
             if form.is_valid():
                 username = form.cleaned_data.get('username')
                 password = form.cleaned_data.get('password')
-                User = authenticate(username=username, password=password)
-                login(request, User)
+                user_cre = authenticate(username=username, password=password)
+                login(request, user_cre)
                 messages.success(request, 'You are logged in.')
                 if 'next' in request.POST:
                     next_url = request.POST.get('next')
@@ -36,10 +37,10 @@ def login_page_view(request):
                 messages.error(request, 'You must login first.')
         return render(request, 'login.html', {'form' : form})
 
-
+#completed
 def signup_page_view(request):
     if request.user.is_authenticated:
-        messages.info(request, 'You are already logged in.')
+        messages.success(request, 'You are already logged in.')
         return redirect('dashboard')
     else:
         form = UserSignupForm(request.POST or None)
@@ -49,17 +50,17 @@ def signup_page_view(request):
             return redirect('login')
         return render(request, 'register.html', {'form': form})
 
-
+#completed
 def logout_page_view(request):
     if not request.user.is_authenticated:
         raise Http404()
     else:
         logout(request)
-        messages.warning(request, 'You are logged out.')
+        messages.error(request, 'You are logged out.')
         return redirect('index')
 
 
-@login_required()
+@login_required() #completed
 def dashboard_page_view(request):
     if 'search' in request.GET:
         search_term = request.GET.get('search')
@@ -89,88 +90,92 @@ def dashboard_page_view(request):
         return render(request, 'users/user.html', {'no_posts_found' : True})
 
 
-@login_required()
+@login_required() #completed
 def upload_page_view(request):
-    if request.method == 'POST':
-        form = UploadForm(request.POST, request.FILES)
-        if form.is_valid():
-
-            temp, temp2 = request.POST.get('photo_camera'), request.POST.get('photo_location')
-            if not Camera.objects.filter(camera=temp).exists():
-                cam_obj = Camera(camera=temp, slug=unique_slug(Camera, temp))
-                cam_obj.save()
-            else:
-                cam_obj = get_object_or_404(Camera, camera=temp)
-            if not Location.objects.filter(location=temp2).exists():
-                loc_obj = Location(location=temp2, slug=unique_slug(Location, temp2))
-                loc_obj.save()
-            else:
-                loc_obj = get_object_or_404(Location, location=temp2)
-
-            data = form.save(commit=False)
-            data.slug = unique_slug(Photo, data.title)
-            data.user = request.user
-            data.image_type = data.image.name.split('.')[-1].upper()
-            data.camera = cam_obj
-            data.location = loc_obj
-            data.save()
-            messages.success(request, 'Photo uploaded successfully.')
-            return redirect('dashboard')
-    else:
-        form = UploadForm()
-    return render(request, 'users/upload_edit.html', {'form' : form, 'head' : 'Upload New Photo', 'button' : 'Upload'})
+    form = UploadForm(request.POST or None, request.FILES or None)
+    if form.is_valid():
+        temp, temp2 = request.POST.get('photo_camera'), request.POST.get('photo_location')
+        data = form.save(commit=False)
+        data.slug = unique_slug(Photo, data.title)
+        data.user = request.user
+        data.image_type = data.image.name.split('.')[-1].upper()
+        data.camera = get_or_create_object(temp, Camera)
+        data.location = get_or_create_object(temp2, Location)
+        data.save()
+        messages.success(request, 'Photo uploaded successfully.')
+        return redirect('dashboard')
+    return render(request, 'users/upload_edit.html', {'form' : form, 'head' : 'Upload New Photo', 'button' : 'Upload Photo'})
 
 
-@login_required()
+@login_required() #completed
 def edit_profile_page_view(request):
-    return render(request, 'users/useraction.html')
+    instance = get_object_or_404(User, username=request.user.username, is_active=True)
+    form = UserEditForm(request.POST or None, request.FILES or None, instance=instance)
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Profile updated successfully.')
+        return redirect('dashboard')
+    return render(request, 'users/upload_edit.html', {'form' : form, 'head' : 'Edit Profile', 'button' : 'Update Changes', 'secret_key' : True})
 
 
-@login_required()
+@login_required() #completed
 def delete_page_view(request):
     if request.method == 'POST':
-        data = get_object_or_404(Photo, slug=request.POST.get('slug'), active=True)
+        data = get_object_or_404(Photo, slug=request.POST.get('slug'), user=request.user, active=True)
         data.active = False
         data.save()
-        messages.warning(request, 'Photo deleted successfully.')
+        messages.error(request, 'Photo deleted successfully.')
         return redirect('dashboard')
     else:
         raise Http404()
 
 
-@login_required()
+@login_required() #completed
 def edit_page_view(request, slug):
-    if request.method == 'POST':
-        instance = get_object_or_404(Photo, slug=slug, active=True)
-        form = EditForm(request.POST, instance=instance)
-        if form.is_valid():
-
-            temp, temp2 = request.POST.get('photo_camera'), request.POST.get('photo_location')
-            if not Camera.objects.filter(camera=temp).exists():
-                cam_obj = Camera(camera=temp, slug=unique_slug(Camera, temp))
-                cam_obj.save()
-            else:
-                cam_obj = get_object_or_404(Camera, camera=temp)
-            if not Location.objects.filter(location=temp2).exists():
-                loc_obj = Location(location=temp2, slug=unique_slug(Location, temp2))
-                loc_obj.save()
-            else:
-                loc_obj = get_object_or_404(Location, location=temp2)
-
-            data = form.save(commit=False)
-            data.camera = cam_obj
-            data.location = loc_obj
-            data.save()
-            messages.success(request, 'Photo updated successfully.')
-            return redirect('dashboard')
+    instance = get_object_or_404(Photo, slug=slug, active=True)
+    form = EditForm(request.POST or None, instance=instance)
+    if form.is_valid():
+        temp, temp2 = request.POST.get('photo_camera'), request.POST.get('photo_location')
+        data = form.save(commit=False)
+        data.camera = get_or_create_object(temp, Camera)
+        data.location = get_or_create_object(temp2, Location)
+        data.save()
+        messages.success(request, 'Photo updated successfully.')
+        return redirect('dashboard')
     else:
-        data = get_object_or_404(Photo, slug=slug, active=True)
         param = {
-            'title' : data.title,
-            'category' : data.category,
-            'photo_camera' : data.camera,
-            'photo_location' : data.location,
-            'tags' : data.tags
+            'title' : instance.title,
+            'category' : instance.category,
+            'photo_camera' : instance.camera,
+            'photo_location' : instance.location,
+            'tags' : instance.tags
         }
         form = EditForm(initial=param)
-    return render(request, 'users/upload_edit.html', {'form' : form, 'head' : 'Edit Photo Details', 'button' : 'Update', 'slug' : slug})
+    return render(request, 'users/upload_edit.html', {'form' : form, 'head' : 'Edit Photo Details', 'button' : 'Update Changes', 'slug' : slug})
+
+
+@login_required() #completed
+def change_password_view(request):
+    form = ChangePasswordForm(user=request.user, data=request.POST or None)
+    if form.is_valid():
+        form.save()
+        update_session_auth_hash(request, form.user)
+        messages.success(request, 'Password changed successfully.')
+        return redirect('dashboard')
+    return render(request, 'users/upload_edit.html', {'form' : form, 'head' : 'Change Password', 'button' : 'Update Changes'})
+
+
+@login_required() #completed
+def deactivate_profile_page_view(request):
+    if request.method == 'POST':
+        data = get_object_or_404(User, username=request.user.username, is_active=True)
+        photos = Photo.objects.filter(user=request.user).filter(active=True)
+        likes = request.user.like_set.all()
+        data.is_active = False
+        photos.update(active=False)
+        likes.update(active=False)
+        data.save()
+        messages.error(request, 'Profile deactivated successfully.')
+        return redirect('index')
+    else:
+        raise Http404()
