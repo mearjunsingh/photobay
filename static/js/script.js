@@ -28,60 +28,6 @@ document.getElementById("footeryear").innerHTML = footeryear;
 
 
 
-//category filter in discover page
-// Dropdown
-function cat_filter_drop() {
-  var x = document.getElementById("cat_filter");
-  if (x.className.indexOf("w3-show") == -1) {
-    x.className += " w3-show";
-  } else {
-    x.className = x.className.replace(" w3-show", "");
-  }
-}
-// Filter
-function cat_filter() {
-  var input, filter, ul, li, a, i;
-  input = document.getElementById("cat_filter_input");
-  filter = input.value.toUpperCase();
-  div = document.getElementById("cat_filter");
-  a = div.getElementsByTagName("a");
-  for (i = 0; i < a.length; i++) {
-    txtValue = a[i].textContent || a[i].innerText;
-    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-      a[i].style.display = "";
-    } else {
-      a[i].style.display = "none";
-    }
-  }
-}
-
-
-
-//status filter in discover page
-// Dropdown
-function stat_filter_drop() {
-  var x = document.getElementById("stat_filter");
-  if (x.className.indexOf("w3-show") == -1) {
-    x.className += " w3-show";
-  } else {
-    x.className = x.className.replace(" w3-show", "");
-  }
-}
-
-
-
-//ort filter in discover page
-// Dropdown
-function ort_filter_drop() {
-  var x = document.getElementById("ort_filter");
-  if (x.className.indexOf("w3-show") == -1) {
-    x.className += " w3-show";
-  } else {
-    x.className = x.className.replace(" w3-show", "");
-  }
-}
-
-
 
 
 // share links

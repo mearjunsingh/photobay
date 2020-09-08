@@ -4,110 +4,43 @@
 
 {% block content %}
 
-
-  
-  
-  
-   
-<!-- PAGE CONTENT -->
 <div class="w3-content" style="margin-top:65px; max-width:1500px">
 
+    <div class="w3-container">
+        <div class="w3-bar w3-light-grey w3-round w3-padding">
+            <div class="w3-container w3-section">
+                <form action="." method="get">
+                    <input type="search" name="search" class="w3-input w3-left w3-border" placeholder="Search photos, categories, tags, cameras, locations or users..." style="width:70%; outline:none;" required {% if request.GET.search %}value="{{ request.GET.search }}"{% endif %}>
+                    <button class="w3-button w3-green w3-right w3-hover-red" type="submit" style="width:30%; height:41px; outline:none;">Search <i class="fa fa-search"></i></button>
+                </form>
 
-<!--filters -->
-<div class="w3-container">
+                {% if request.GET.search %}
+                <span class="w3-container">
+                    <strong>Search resuts:</strong> {{ request.GET.search }} <a href="{% url 'browse' %}" class="w3-text-red" style="text-decoration: none; margin-left: 20px;"><i class="fa fa-remove"></i> clear</a>
+                </span>
+                {% endif %}
 
-    <div class="w3-bar w3-light-grey w3-round w3-padding">
-       
-       <!--modes-->
-
-       <div class="w3-dropdown-click w3-hide-small w3-margin">
-        <button class="w3-btn w3-round w3-green" style="outline:none" onclick="stat_filter_drop()">Recent</button>
-        
-        <div class="w3-dropdown-content w3-bar-block w3-card w3-light-grey" id="stat_filter">
-          <a class="w3-bar-item w3-button w3-gray">Recent</a>
-          <a class="w3-bar-item w3-button">Most Viewed</a>
-          <a class="w3-bar-item w3-button">Most Liked</a>
-          <a class="w3-bar-item w3-button">Most Downloaded</a>
+                {% if request.GET.category %}
+                <span class="w3-container">
+                    <strong>Category resuts:</strong> {{ request.GET.category }} <a href="{% url 'browse' %}" class="w3-text-red" style="text-decoration: none; margin-left: 20px;"><i class="fa fa-remove"></i> clear</a>
+                </span>
+                {% endif %}
+            </div>
         </div>
-        
-      </div>
-  
-   
-   
-    <div class="w3-dropdown-click w3-hide-small w3-margin">
-        <button class="w3-btn w3-round w3-green" style="outline:none" onclick="cat_filter_drop()">Categories</button>
-        
-        <div class="w3-dropdown-content w3-bar-block w3-card w3-light-grey" id="cat_filter">
-          <input class="w3-input w3-padding" type="text" placeholder="Search.." id="cat_filter_input" onkeyup="cat_filter()">
-          <a class="w3-bar-item w3-button w3-gray" href="#about">All</a>
-          <a class="w3-bar-item w3-button" href="#about">About</a>
-          <a class="w3-bar-item w3-button">Base</a>
-          <a class="w3-bar-item w3-button" href="#blog">Blog</a>
-          <a class="w3-bar-item w3-button" href="#contact">Contact</a>
-          <a class="w3-bar-item w3-button" href="#custom">Custom</a>
-          <a class="w3-bar-item w3-button" href="#support">Support</a>
-          <a class="w3-bar-item w3-button" href="#tools">Tools</a>
-        </div>
-        
-  </div>
+    </div>
 
-   
-   
-    <div class="w3-dropdown-click w3-hide-small w3-hide-medium w3-margin">
-        <button class="w3-btn w3-round w3-green" style="outline:none" onclick="ort_filter_drop()">Orientation</button>
-        
-        <div class="w3-dropdown-content w3-bar-block w3-card w3-light-grey" id="ort_filter">
-          <a class="w3-bar-item w3-button w3-gray">Any</a>
-          <a class="w3-bar-item w3-button">Portrait</a>
-          <a class="w3-bar-item w3-button">Landscape</a>
-        </div>
-        
-  </div>
-  
-  
-      <div class="w3-dropdown-click w3-hide-small w3-hide-medium w3-margin">
-        <button style="outline:none" class="w3-btn w3-round w3-red">Clear Filters</button>
-        
-  </div>
-  <!--modes end -->
-  
-  
-  
-  <!--search box -->
-  
-  <div class="w3-container w3-right w3-margin">
-      
-        <input type="text" name="search" class="w3-input w3-padding-large w3-left w3-mobile" placeholder="Search photos..." style="width:70%; outline:none;" required>
-        
-        <button class="w3-btn w3-big w3-green w3-padding-large w3-mobile w3-right" type="submit" style="width:30%; outline:none;">Search <i class="fa fa-search"></i></button>
-      
-  </div>
-  
-  <!--search box end -->
-
-  
-  </div>
-      
-      <!--bar end -->
-       
-       <!-- display results -->
-       <div class="w3-margin">
-           Search Results for: Animals (displayed only if searched)
-           
-       </div> 
-      
-      <!-- display results end -->
-</div>
-
-
+<!-- done upto here -->
 
 <!-- Photo Grid -->
 <div class="w3-row-padding" id="myGrid" style="margin-top:20px; margin-bottom:40px">
  
   <div class="w3-third">
-  
+    {% for item in data %}
+    
+
+
    <div class="w3-display-container w3-opacity-min w3-hover-opacity-off">
-       <a href="#"><img class="w3-card" src="images/rocks.jpg" style="width:100%"></a>
+       <a href="#"><img class="w3-card" src="{{item.image.url}}" style="width:100%"></a>
        
        <div class="w3-display-bottomleft w3-display-hover w3-margin">
        <a href="#" class="w3-button w3-round w3-white"><i class="fa fa-user"></i> Baley Sarkar</a>
@@ -119,7 +52,7 @@
        </div>
        
    </div>
-    
+   {% endfor %}
     <div class="w3-display-container w3-opacity-min w3-hover-opacity-off">
        <a href="#"><img class="w3-card" src="images/sound.jpg" style="width:100%"></a>
        

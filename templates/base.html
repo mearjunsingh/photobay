@@ -22,18 +22,18 @@
       <a class="w3-bar-item w3-button w3-padding-large w3-hide-large w3-left" href="javascript:void(0)" onclick="mobileNav()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
       
       <a href="/" class="w3-bar-item w3-padding"><img src="{% static 'images/logo.png' %}" alt="PN"/></a>
-      <a href="#" class="w3-bar-item w3-button w3-padding-large w3-hide-small w3-hide-medium">LANDSCAPE</a>
-      <a href="#" class="w3-bar-item w3-button w3-padding-large w3-hide-small w3-hide-medium">OBJECT</a>
-      <a href="#" class="w3-bar-item w3-button w3-padding-large w3-hide-small w3-hide-medium">PEOPLE</a>
-      <a href="#" class="w3-bar-item w3-button w3-padding-large w3-hide-small w3-hide-medium">ARCHITECTURE</a>
+
+      {% for cat in cat_menu %}
+        <a href="{% url 'browse' %}?category={{ cat.slug }}" class="w3-bar-item w3-button w3-padding-large w3-hide-small w3-hide-medium">{{ cat|upper }}</a>
+      {% endfor %}
 
       <div class="w3-dropdown-click w3-hide-small w3-left">
        <button onclick="explore()" class="w3-padding-large w3-button" style="outline:none;" title="More">EXPLORE <i class="fa fa-caret-down"></i></button>
        <div id="explore" class="w3-dropdown-content w3-bar-block w3-card-4">
        
-           <a href="#" class="w3-bar-item w3-button">Cameras</a>
-           <a href="#" class="w3-bar-item w3-button">Artists</a>
-           <a href="#" class="w3-bar-item w3-button">Locations <span class="w3-badge w3-red w3-small">New</span> </a>
+           <a href="{% url 'camera' %}" class="w3-bar-item w3-button">Cameras</a>
+           <a href="{% url 'artists' %}" class="w3-bar-item w3-button">Artists</a>
+           <a href="{% url 'location' %}" class="w3-bar-item w3-button">Locations <span class="w3-badge w3-red w3-small">New</span> </a>
        
         </div>
         </div>
