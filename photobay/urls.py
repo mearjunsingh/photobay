@@ -38,7 +38,7 @@ urlpatterns = [
     path('signup/', signup_page_view, name='signup'),
     path('dashboard/', include('users.urls')),
     path('admin/', admin.site.urls),
-    #path('<str:username>/', profile_public_page_view, name='public_profile'),
+    path('<str:username>/', profile_public_page_view, name='public_profile'),
     path('<str:username>/<str:slug>/', single_page_view, name='single'),
 ]
 

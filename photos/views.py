@@ -7,11 +7,13 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 # Create your views here.
 
+#completed
 def index_page_view(request):
     home = get_object_or_404(Photo, id=6)
-    return render(request, 'index.html', {'home' : home})
+    data = Photo.objects.filter(active=True).order_by('-views_count')[:20]
+    return render(request, 'index.html', {'home' : home, 'data' : data})
 
-
+#completed
 def browse_page_view(request):
     if 'search' in request.GET:
         search_term = request.GET.get('search')
@@ -45,11 +47,14 @@ def browse_page_view(request):
     else:
         return render(request, 'discover.html', {'no_posts_found' : True})
 
-
+#completed
 def single_page_view(request, username, slug):
-    return render(request, 'single.html')
+    data = get_object_or_404(Photo, user__username=username, slug=slug, active=True)
+    data.views_count += 1
+    data.save()
+    return render(request, 'single.html', {'data' : data})
 
-
+#completed
 def profile_public_page_view(request, username):
     data = get_object_or_404(User, username=username, is_active=True)
-    return render(request, 'users/userpublic.html')
+    return render(request, 'users/userpublic.html', {'data' : data})

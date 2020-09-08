@@ -30,33 +30,36 @@
 
 </div>
 
- 
-  
-   
-<!-- PAGE CONTENT -->
 <div class="w3-content" style="max-width:1500px">
 
-    <div class="flex-images">
-        <div class="item" data-w="219" data-src="https://goodies.pixabay.com/javascript/flex-images/images/2.jpg" data-h="180"><img src="" alt="jhg"></div>
-        <div class="item" data-w="279" data-h="180"><img src="https://goodies.pixabay.com/javascript/flex-images/images/2.jpg"></div>
-        
+    <section class="w3-container w3-section" id="photos">
+        {% for item in data %}
+    
+          <div class="w3-display-container" style="margin-top: 5px;">
+            <div class="img-container">
+    
+              <a href="{% url 'single' item.user.username item.slug %}">
+                <img src="{{ item.image.url }}">
+              </a>
+    
+              <div class="w3-display-bottomleft w3-display-hover w3-margin">
+                <a href="/photobay" class="w3-text-white" style="text-decoration: none;"> <i class="fa fa-user"></i> {{ item.user.username }}</a>
+              </div>
+    
+              <div class="w3-display-bottomright w3-display-hover w3-margin">
+                <span class="w3-text-white"> <i class="fa fa-heart"></i> {{ item.like_set.all.count }}</span>
+              </div>
+    
+            </div>
+          </div>
+    
+        {% endfor %}
+      </section>
+
+    <div class="w3-container w3-padding-large w3-section w3-center">
+        <a href="{% url 'browse' %}" class="w3-btn w3-padding-large w3-large w3-round w3-green" style="margin-bottom:50px">Discover All Images</a>
     </div>
 
-
-<div class="w3-container w3-padding-large w3-section w3-center">
-    
-    
-    <a href="{% url 'browse' %}" class="w3-btn w3-padding-large w3-large w3-round w3-green" style="margin-bottom:50px">Discover All Images</a>
-    
 </div>
-
-
-
-</div>
-<!-- End Page Content -->
-
-<script>
-    new flexImages({ selector: '.flex-images', rowHeight: 140, truncate: True });
-</script>
 
 {% endblock %}
