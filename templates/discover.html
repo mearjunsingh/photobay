@@ -2,7 +2,7 @@
 
 {% block title %}Photobay - Beautiful Photos by Motivated Photographers{% endblock %}
 
-{% block content %}
+{% block content %} {% load static %}
 
 <div class="w3-content" style="margin-top:65px; max-width:1500px">
 
@@ -29,304 +29,90 @@
         </div>
     </div>
 
-<!-- done upto here -->
-
-<!-- Photo Grid -->
-<div class="w3-row-padding" id="myGrid" style="margin-top:20px; margin-bottom:40px">
- 
-  <div class="w3-third">
+<div class="w3-container flex-images">
+    
     {% for item in data %}
-    
+        <div class="item" data-w="{{ item.image.width }}" data-h="{{ item.image.height }}">
+            <img src="{{ item.image.url }}">
+        </div>
+    {% endfor %}
 
+    {% for item in data %}
+        <div class="item" data-w="{{ item.image.width }}" data-h="{{ item.image.height }}">
+            <img src="{{ item.image.url }}">
+        </div>
+    {% endfor %}
 
-   <div class="w3-display-container w3-opacity-min w3-hover-opacity-off">
-       <a href="#"><img class="w3-card" src="{{item.image.url}}" style="width:100%"></a>
-       
-       <div class="w3-display-bottomleft w3-display-hover w3-margin">
-       <a href="#" class="w3-button w3-round w3-white"><i class="fa fa-user"></i> Baley Sarkar</a>
-       </div>
-       
-       <div class="w3-display-bottomright w3-hide-medium w3-display-hover w3-margin">
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-red w3-text-red" style="cursor:auto;"> <i class="fa fa-heart"></i>  24</span>
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-green w3-text-green" style="cursor:auto;"> <i class="fa fa-download"></i>  27</span>    
-       </div>
-       
-   </div>
-   {% endfor %}
-    <div class="w3-display-container w3-opacity-min w3-hover-opacity-off">
-       <a href="#"><img class="w3-card" src="images/sound.jpg" style="width:100%"></a>
-       
-       <div class="w3-display-bottomleft w3-display-hover w3-margin">
-       <a href="#" class="w3-button w3-round w3-white"><i class="fa fa-user"></i> Baley Sarkar</a>
-       </div>
-       
-       <div class="w3-display-bottomright w3-hide-medium w3-display-hover w3-margin">
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-red w3-text-red" style="cursor:auto;"> <i class="fa fa-heart"></i>  24</span>
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-green w3-text-green" style="cursor:auto;"> <i class="fa fa-download"></i>  27</span>    
-       </div>
-       
-   </div>
-   
-   
-   <div class="w3-display-container w3-opacity-min w3-hover-opacity-off">
-       <a href="#"><img class="w3-card" src="images/woods.jpg" style="width:100%"></a>
-       
-       <div class="w3-display-bottomleft w3-display-hover w3-margin">
-       <a href="#" class="w3-button w3-round w3-white"><i class="fa fa-user"></i> Baley Sarkar</a>
-       </div>
-       
-       <div class="w3-display-bottomright w3-hide-medium w3-display-hover w3-margin">
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-red w3-text-red" style="cursor:auto;"> <i class="fa fa-heart"></i>  24</span>
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-green w3-text-green" style="cursor:auto;"> <i class="fa fa-download"></i>  27</span>    
-       </div>
-       
-   </div>
-   
-   
-   <div class="w3-display-container w3-opacity-min w3-hover-opacity-off">
-       <a href="#"><img class="w3-card" src="images/rock.jpg" style="width:100%"></a>
-       
-       <div class="w3-display-bottomleft w3-display-hover w3-margin">
-       <a href="#" class="w3-button w3-round w3-white"><i class="fa fa-user"></i> Baley Sarkar</a>
-       </div>
-       
-       <div class="w3-display-bottomright w3-hide-medium w3-display-hover w3-margin">
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-red w3-text-red" style="cursor:auto;"> <i class="fa fa-heart"></i>  24</span>
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-green w3-text-green" style="cursor:auto;"> <i class="fa fa-download"></i>  27</span>    
-       </div>
-       
-   </div>
-   
-   
-   <div class="w3-display-container w3-opacity-min w3-hover-opacity-off">
-       <a href="#"><img class="w3-card" src="images/nature.jpg" style="width:100%"></a>
-       
-       <div class="w3-display-bottomleft w3-display-hover w3-margin">
-       <a href="#" class="w3-button w3-round w3-white"><i class="fa fa-user"></i> Baley Sarkar</a>
-       </div>
-       
-       <div class="w3-display-bottomright w3-hide-medium w3-display-hover w3-margin">
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-red w3-text-red" style="cursor:auto;"> <i class="fa fa-heart"></i>  24</span>
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-green w3-text-green" style="cursor:auto;"> <i class="fa fa-download"></i>  27</span>    
-       </div>
-       
-   </div>
-   
-   
-   
-   <div class="w3-display-container w3-opacity-min w3-hover-opacity-off">
-       <a href="#"><img class="w3-card" src="images/mist.jpg" style="width:100%"></a>
-       
-       <div class="w3-display-bottomleft w3-display-hover w3-margin">
-       <a href="#" class="w3-button w3-round w3-white"><i class="fa fa-user"></i> Baley Sarkar</a>
-       </div>
-       
-       <div class="w3-display-bottomright w3-hide-medium w3-display-hover w3-margin">
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-red w3-text-red" style="cursor:auto;"> <i class="fa fa-heart"></i>  24</span>
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-green w3-text-green" style="cursor:auto;"> <i class="fa fa-download"></i>  27</span>    
-       </div>
-       
-   </div>
+    {% for item in data %}
+        <div class="item" data-w="{{ item.image.width }}" data-h="{{ item.image.height }}">
+            <img src="{{ item.image.url }}">
+        </div>
+    {% endfor %}
 
-  </div>
+    {% for item in data %}
+        <div class="item" data-w="{{ item.image.width }}" data-h="{{ item.image.height }}">
+            <img src="{{ item.image.url }}">
+        </div>
+    {% endfor %}
 
-  <div class="w3-third">
-   
-    <div class="w3-display-container w3-opacity-min w3-hover-opacity-off">
-       <a href="#"><img class="w3-card" src="images/coffee.jpg" style="width:100%"></a>
-       
-       <div class="w3-display-bottomleft w3-display-hover w3-margin">
-       <a href="#" class="w3-button w3-round w3-white"><i class="fa fa-user"></i> Baley Sarkar</a>
-       </div>
-       
-       <div class="w3-display-bottomright w3-hide-medium w3-display-hover w3-margin">
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-red w3-text-red" style="cursor:auto;"> <i class="fa fa-heart"></i>  24</span>
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-green w3-text-green" style="cursor:auto;"> <i class="fa fa-download"></i>  27</span>    
-       </div>
-       
-   </div>
-    
-      <div class="w3-display-container w3-opacity-min w3-hover-opacity-off">
-       <a href="#"><img class="w3-card" src="images/bridge.jpg" style="width:100%"></a>
-       
-       <div class="w3-display-bottomleft w3-display-hover w3-margin">
-       <a href="#" class="w3-button w3-round w3-white"><i class="fa fa-user"></i> Baley Sarkar</a>
-       </div>
-       
-       <div class="w3-display-bottomright w3-hide-medium w3-display-hover w3-margin">
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-red w3-text-red" style="cursor:auto;"> <i class="fa fa-heart"></i>  24</span>
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-green w3-text-green" style="cursor:auto;"> <i class="fa fa-download"></i>  27</span>    
-       </div>
-       
-   </div>
-   
-    <div class="w3-display-container w3-opacity-min w3-hover-opacity-off">
-       <a href="#"><img class="w3-card" src="images/notebook.jpg" style="width:100%"></a>
-       
-       <div class="w3-display-bottomleft w3-display-hover w3-margin">
-       <a href="#" class="w3-button w3-round w3-white"><i class="fa fa-user"></i> Baley Sarkar</a>
-       </div>
-       
-       <div class="w3-display-bottomright w3-hide-medium w3-display-hover w3-margin">
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-red w3-text-red" style="cursor:auto;"> <i class="fa fa-heart"></i>  24</span>
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-green w3-text-green" style="cursor:auto;"> <i class="fa fa-download"></i>  27</span>    
-       </div>
-       
-   </div>
-   
-    <div class="w3-display-container w3-opacity-min w3-hover-opacity-off">
-       <a href="#"><img class="w3-card" src="images/london.jpg" style="width:100%"></a>
-       
-       <div class="w3-display-bottomleft w3-display-hover w3-margin">
-       <a href="#" class="w3-button w3-round w3-white"><i class="fa fa-user"></i> Baley Sarkar</a>
-       </div>
-       
-       <div class="w3-display-bottomright w3-hide-medium w3-display-hover w3-margin">
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-red w3-text-red" style="cursor:auto;"> <i class="fa fa-heart"></i>  24</span>
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-green w3-text-green" style="cursor:auto;"> <i class="fa fa-download"></i>  27</span>    
-       </div>
-       
-   </div>
-   
-    <div class="w3-display-container w3-opacity-min w3-hover-opacity-off">
-       <a href="#"><img class="w3-card" src="images/rocks.jpg" style="width:100%"></a>
-       
-       <div class="w3-display-bottomleft w3-display-hover w3-margin">
-       <a href="#" class="w3-button w3-round w3-white"><i class="fa fa-user"></i> Baley Sarkar</a>
-       </div>
-       
-       <div class="w3-display-bottomright w3-hide-medium w3-display-hover w3-margin">
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-red w3-text-red" style="cursor:auto;"> <i class="fa fa-heart"></i>  24</span>
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-green w3-text-green" style="cursor:auto;"> <i class="fa fa-download"></i>  27</span>    
-       </div>
-       
-   </div>
-   
-    <div class="w3-display-container w3-opacity-min w3-hover-opacity-off">
-       <a href="#"><img class="w3-card" src="images/avatar_g.jpg" style="width:100%"></a>
-       
-       <div class="w3-display-bottomleft w3-display-hover w3-margin">
-       <a href="#" class="w3-button w3-round w3-white"><i class="fa fa-user"></i> Baley Sarkar</a>
-       </div>
-       
-       <div class="w3-display-bottomright w3-hide-medium w3-display-hover w3-margin">
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-red w3-text-red" style="cursor:auto;"> <i class="fa fa-heart"></i>  24</span>
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-green w3-text-green" style="cursor:auto;"> <i class="fa fa-download"></i>  27</span>    
-       </div>
-       
-   </div>
-   
-  </div>
+    {% for item in data %}
+        <div class="item" data-w="{{ item.image.width }}" data-h="{{ item.image.height }}">
+            <img src="{{ item.image.url }}">
+        </div>
+    {% endfor %}
 
-  <div class="w3-third">
+    {% for item in data %}
+        <div class="item" data-w="{{ item.image.width }}" data-h="{{ item.image.height }}">
+            <img data-src="{{ item.image.url }}" src="{% static 'images/blank.gif' %}">
+        </div>
+    {% endfor %}
    
-          <div class="w3-display-container w3-opacity-min w3-hover-opacity-off">
-       <a href="#"><img class="w3-card" src="images/mist.jpg" style="width:100%"></a>
-       
-       <div class="w3-display-bottomleft w3-display-hover w3-margin">
-       <a href="#" class="w3-button w3-round w3-white"><i class="fa fa-user"></i> Baley Sarkar</a>
-       </div>
-       
-       <div class="w3-display-bottomright w3-hide-medium w3-display-hover w3-margin">
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-red w3-text-red" style="cursor:auto;"> <i class="fa fa-heart"></i>  24</span>
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-green w3-text-green" style="cursor:auto;"> <i class="fa fa-download"></i>  27</span>    
-       </div>
-       
-   </div>
-      
-        <div class="w3-display-container w3-opacity-min w3-hover-opacity-off">
-       <a href="#"><img class="w3-card" src="images/workbench.jpg" style="width:100%"></a>
-       
-       <div class="w3-display-bottomleft w3-display-hover w3-margin">
-       <a href="#" class="w3-button w3-round w3-white"><i class="fa fa-user"></i> Baley Sarkar</a>
-       </div>
-       
-       <div class="w3-display-bottomright w3-hide-medium w3-display-hover w3-margin">
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-red w3-text-red" style="cursor:auto;"> <i class="fa fa-heart"></i>  24</span>
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-green w3-text-green" style="cursor:auto;"> <i class="fa fa-download"></i>  27</span>    
-       </div>
-       
-   </div>
-   
-        <div class="w3-display-container w3-opacity-min w3-hover-opacity-off">
-       <a href="#"><img class="w3-card" src="images/gondol.jpg" style="width:100%"></a>
-       
-       <div class="w3-display-bottomleft w3-display-hover w3-margin">
-       <a href="#" class="w3-button w3-round w3-white"><i class="fa fa-user"></i> Baley Sarkar</a>
-       </div>
-       
-       <div class="w3-display-bottomright w3-hide-medium w3-display-hover w3-margin">
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-red w3-text-red" style="cursor:auto;"> <i class="fa fa-heart"></i>  24</span>
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-green w3-text-green" style="cursor:auto;"> <i class="fa fa-download"></i>  27</span>    
-       </div>
-       
-   </div>
-   
-       <div class="w3-display-container w3-opacity-min w3-hover-opacity-off">
-       <a href="#"><img class="w3-card" src="images/skies.jpg" style="width:100%"></a>
-       
-       <div class="w3-display-bottomleft w3-display-hover w3-margin">
-       <a href="#" class="w3-button w3-round w3-white"><i class="fa fa-user"></i> Baley Sarkar</a>
-       </div>
-       
-       <div class="w3-display-bottomright w3-hide-medium w3-display-hover w3-margin">
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-red w3-text-red" style="cursor:auto;"> <i class="fa fa-heart"></i>  24</span>
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-green w3-text-green" style="cursor:auto;"> <i class="fa fa-download"></i>  27</span>    
-       </div>
-       
-   </div>
-   
-        <div class="w3-display-container w3-opacity-min w3-hover-opacity-off">
-       <a href="#"><img class="w3-card" src="images/lights.jpg" style="width:100%"></a>
-       
-       <div class="w3-display-bottomleft w3-display-hover w3-margin">
-       <a href="#" class="w3-button w3-round w3-white"><i class="fa fa-user"></i> Baley Sarkar</a>
-       </div>
-       
-       <div class="w3-display-bottomright w3-hide-medium w3-display-hover w3-margin">
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-red w3-text-red" style="cursor:auto;"> <i class="fa fa-heart"></i>  24</span>
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-green w3-text-green" style="cursor:auto;"> <i class="fa fa-download"></i>  27</span>    
-       </div>
-       
-   </div>
-   
-          <div class="w3-display-container w3-opacity-min w3-hover-opacity-off">
-       <a href="images/workshop.jpg"><img class="w3-card" src="images/workshop.jpg" style="width:100%"></a>
-       
-       <div class="w3-display-bottomleft w3-display-hover w3-margin">
-       <a href="#" class="w3-button w3-round w3-white"><i class="fa fa-user"></i> Baley Sarkar</a>
-       </div>
-       
-       <div class="w3-display-bottomright w3-hide-medium w3-display-hover w3-margin">
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-red w3-text-red" style="cursor:auto;"> <i class="fa fa-heart"></i>  24</span>
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-green w3-text-green" style="cursor:auto;"> <i class="fa fa-download"></i>  27</span>    
-       </div>
-       
-   </div>
-   
-  </div>
-  
 </div>
-<!-- grid end -->
 
+  {% if data.paginator.num_pages > 1 %}
+    <div class="w3-container w3-section w3-center">
+      <div class="w3-bar w3-border w3-round">
 
-<div class="w3-container w3-padding-large w3-section w3-center" style="margin-bottom:50px">    
+        {% if data.number != 1 %}
+          <a href="{{ base_url }}page=1" class="w3-bar-item w3-green w3-hover-red w3-button">First</a>
+        {% else %}
+          <button class="w3-bar-item w3-green w3-hover-green w3-button" disabled>First</button>
+        {% endif %}
 
+        {% if data.has_previous %}
+          <a href="{{ base_url }}page={{ data.previous_page_number }}" class="w3-bar-item w3-green w3-hover-red w3-button">&laquo; Previous</a>
+        {% else %}
+          <button class="w3-bar-item w3-green w3-hover-green w3-button" disabled>&laquo;</button>
+        {% endif %}
 
-      <a href="#" class="w3-btn w3-green">&laquo; Prev</a>
-      <span class="w3-margin">
-      Page <input class="w3-padding w3-center" type="number" value="1" style="width:100px">
-      <span class=""> of 283</span>
-      </span> 
-      <a href="#" class="w3-btn w3-green">Next &raquo;</a>
+        {% for i in data.paginator.page_range %}
+          {% if data.number == i %}
+            <button class="w3-bar-item w3-red w3-hover-red w3-button">{{ i }}</button>
+          {% elif data.number > i|add:"-3" and data.number < i|add:"+3"%}
+            <a href="{{ base_url }}page={{ i }}" class="w3-bar-item w3-hide-small w3-green w3-hover-red w3-button">{{ i }}</a>
+          {% endif %}
+        {% endfor %}
 
+        {% if data.has_next %}
+          <a href="{{ base_url }}page={{ data.next_page_number }}" class="w3-bar-item w3-green w3-hover-red w3-button">Next &raquo;</a>
+        {% else %}
+          <button class="w3-bar-item w3-green w3-hover-green w3-button" disabled>&raquo;</button>
+        {% endif %}
+
+        {% if data.paginator.num_pages != data.number %}
+          <a href="{{ base_url }}page={{ data.paginator.num_pages }}" class="w3-bar-item w3-green w3-hover-red w3-button">Last</a>
+        {% else %}
+          <button class="w3-bar-item w3-green w3-hover-green w3-button" disabled>Last</button>
+        {% endif %}
+
+      </div>
+    </div>
+  {% endif %}
 
 </div>
 
-
-
-</div>
-<!-- End Page Content -->
+<script>
+    new flexImages({selector: '.flex-images', rowHeight: 180, truncate: 1, maxRows: 2});
+</script>
 
 {% endblock %}
-

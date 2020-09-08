@@ -31,7 +31,7 @@ def browse_page_view(request):
         b_url = '?'
         photos_list = Photo.objects.filter(active=True).order_by('-uploaded_on')
     if photos_list.count() != 0:
-        paginator = Paginator(photos_list, 1)
+        paginator = Paginator(photos_list, 20)
         if 'page' in request.GET:
             q = request.GET['page']
             if q is not None and q != '' and q != '0':
