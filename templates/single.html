@@ -6,359 +6,192 @@
 
 <div class="w3-content" style="margin-top:65px; max-width:1500px">
 
-    <div class="w3-container">
-        <div class="w3-bar w3-light-grey w3-round w3-padding">
-            <div class="w3-container w3-section">
-                <form action="{% url 'browse' %}" method="get">
-                    <input type="search" name="search" class="w3-input w3-left w3-border" placeholder="Search photos, categories, tags, cameras, locations or users..." style="width:70%; outline:none;" required {% if request.GET.search %}value="{{ request.GET.search }}"{% endif %}>
-                    <button class="w3-button w3-green w3-right w3-hover-red" type="submit" style="width:30%; height:41px; outline:none;">Search <i class="fa fa-search"></i></button>
-                </form>
-
-                {% if request.GET.search %}
-                <span class="w3-container">
-                    <strong>Search resuts:</strong> {{ request.GET.search }} <a href="{% url 'browse' %}" class="w3-text-red" style="text-decoration: none; margin-left: 20px;"><i class="fa fa-remove"></i> clear</a>
-                </span>
-                {% endif %}
-
-                {% if request.GET.category %}
-                <span class="w3-container">
-                    <strong>Category resuts:</strong> {{ request.GET.category }} <a href="{% url 'browse' %}" class="w3-text-red" style="text-decoration: none; margin-left: 20px;"><i class="fa fa-remove"></i> clear</a>
-                </span>
-                {% endif %}
-            </div>
+  <div class="w3-container">
+    <div class="w3-bar w3-light-grey w3-round w3-padding">
+        <div class="w3-container w3-section">
+            <form action="{% url 'browse' %}" method="get">
+                <input type="search" name="search" class="w3-input w3-left w3-border" placeholder="Search photos, categories, tags, cameras, locations or users..." style="width:70%; outline:none;" required {% if request.GET.search %}value="{{ request.GET.search }}"{% endif %}>
+                <button class="w3-button w3-green w3-right w3-hover-red" type="submit" style="width:30%; height:41px; outline:none;">Search <i class="fa fa-search"></i></button>
+            </form>
         </div>
     </div>
+  </div>
 
+  <div class="w3-container">
+    <h2 class="w3-text-red w3-padding-small">{{ data.title }}</h2>
+  </div>
 
-<div class="w3-container">
-  <h2 class="w3-text-red w3-padding-small">{{ data.title }}</h2>
-</div>
+  <div class="w3-row-padding w3-margin">
+    <div class="w3-col s12 m12 l8">
 
+      <div class="w3-display-container w3-center">
+        <img src="{{ data.image.url }}" style="width:100%" class="w3-mobile w3-round w3-border w3-padding w3-card w3-image">
 
+        <div class="w3-display-topright" style="margin:30px;">
+          <a href="#" class="w3-btn w3-white w3-round w3-hover-text-black w3-text-grey" title="Report"> <i class="fa fa-flag"></i></a>  
+        </div>
+      </div>
 
+      <div class="w3-section w3-center w3-mobile">
+        <span class=" w3-hide-small">Share: </span>
 
+        <button onclick="FBshare()" style="outline:none;" class="w3-btn w3-indigo w3-round-large w3-padding-large"><i class="fa fa-facebook"></i> <span class="w3-hide-medium w3-hide-small">Facebook</span></button>
+        <button onclick="TTshare()" style="outline:none;" class="w3-btn w3-blue w3-round-large w3-text-white w3-padding-large"><i class="fa fa-twitter"></i> <span class="w3-hide-medium w3-hide-small">Twitter</span></button>
+        <button onclick="WAshare()" style="outline:none;" class="w3-btn w3-green w3-round-large w3-padding-large"><i class="fa fa-whatsapp"></i> <span class="w3-hide-medium w3-hide-small">WhatsApp</span></button>
+        <button onclick="Emailshare()" style="outline:none;" class="w3-btn w3-gray w3-round-large w3-text-white w3-padding-large"><i class="fa fa-envelope"></i> <span class="w3-hide-medium w3-hide-small">Email</span></button>
+      </div> 
 
-<!--real things -->
-<div class="w3-row-padding w3-margin">
- 
- 
- <!--photo -->
-  <div class="w3-col s12 m12 l8">
+      <div class="w3-container w3-hide-medium w3-hide-small w3-margin w3-center w3-padding">
+        <hr/>
+          <a href="{% url 'browse' %}?search={{ data.tags }}" class="w3-button w3-round-xxlarge w3-section w3-grey w3-text-white w3-hover-light-grey">{{ data.tags }}</a>
+        <hr/> 
+      </div>
 
-    <div class="w3-display-container w3-center">
-
-    <img src="{{ data.image.url }}" style="width:100%" class="w3-mobile w3-round w3-border w3-padding w3-card w3-image w3-section">
-
-    <div class="w3-display-topright" style="margin:30px;">
-    <a href="#" class="w3-btn w3-white w3-round w3-hover-text-black w3-text-grey" title="Report"> <i class="fa fa-flag"></i></a>  
     </div>
+    <div class="w3-col s12 m12 l4">
 
+      <div class="w3-container w3-mobile w3-padding w3-card"> <br>
 
+        {% if data.user.profile_picture %}
+          <a href="{% url 'public_profile' data.user.username %}" class="w3-hover-opacity w3-margin" style="text-decoration:none;">
+            <img src="{{ data.user.profile_picture.url }}" class="w3-circle" style="width:15%">
+          </a>
+        {% else %}
+          <a href="{% url 'public_profile' data.user.username %}" class="w3-hover-opacity w3-margin" style="text-decoration:none;">
+            <img src="{% static 'images/img_avatar4.png' %}" class="w3-circle" style="width:15%">
+          </a>
+        {% endif %}
+              
+        <a href="{% url 'public_profile' data.user.username %}" class="w3-xlarge w3-hover-text-grey" style="text-decoration:none;">{{ data.user.first_name }} {{ data.user.last_name }}</a>
+              
+        <div class="w3-container w3-section" style="width:100%">
+          <button class="w3-button w3-round w3-green w3-padding w3-hover-red" style="width:45%">Donate</button>
+          <span class="w3-padding" style="width:45%">{{ data.user.photo_set.all.count }} Photos</span>
+        </div>          
+              
+        <div class="w3-container w3-round-xxlarge w3-border w3-padding-large w3-center w3-gray" style="margin-top: 40px; margin-bottom:40px;" style="width:100%">
+          <a href="#" style="width:45%;" class="w3-button w3-white w3-hover-red w3-round w3-hover-text-white w3-text-black"><i class="fa fa-heart"></i> Like</a> 
+          <a href="#" style="width:45%;" class="w3-button w3-white w3-hover-green w3-round w3-hover-text-white w3-text-black"><i class="fa fa-save"></i> Save</a>
+        </div>
+              
+        <div class="w3-container w3-border w3-padding-large w3-section" style="width:100%">
+          <form action="#">
+            <input type="radio" name="quality" value="high" class="w3-radio"> 1280 X 1440 <span class="w3-text-red w3-small w3-hide-small">High Quality</span>
+            <hr/>
+            <input type="radio" name="quality" value="original" class="w3-radio" required> {{ data.image.width }} X {{ data.image.height }} <span class="w3-text-red w3-small w3-hide-small"> Original Quality</span>
+            <hr/>
+            <button type="submit" class="w3-btn w3-round w3-green w3-padding" style="width:100%; outline:none;">Download</button>
+          </form>
+        </div>
+              
+        <div class="w3-container w3-padding-large w3-section" style="width:100%">
+          <span><b>All Details:</b></span>
+          <table class="w3-table w3-bordered">
+            <tr>
+              <td>Type</td>
+              <td>{{ data.image_type }}</td>
+            </tr>
+            <tr>
+              <td>Date</td>
+              <td>{{ data.uploaded_on }}</td>
+            </tr>
+            <tr>
+              <td>Camera</td>
+              <td>{{ data.camera }}</td>
+            </tr>
+            <tr>
+              <td>Location</td>
+              <td>{{ data.location }}</td>
+            </tr>
+            <tr>
+              <td>Views</td>
+              <td>{{ data.views_count }}</td>
+            </tr>
+            <tr>
+              <td>Likes</td>
+              <td>{{ data.like_set.all.count }}</td>
+            </tr>
+            <tr>
+              <td>Downloads</td>
+              <td>{{ data.download_count }}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    
     </div>
+  </div>
 
-  
-  
-  
-  <!-- share options -->
-
-       <div class="w3-section w3-center w3-mobile">
-      <span class=" w3-hide-small">Share: </span>
-      <button onclick="FBshare()" style="outline:none;" class="w3-btn w3-indigo w3-round-large w3-padding-large"><i class="fa fa-facebook"></i> <span class="w3-hide-medium w3-hide-small">Facebook</span></button>
-      
-      <button onclick="TTshare()" style="outline:none;" class="w3-btn w3-blue w3-round-large w3-text-white w3-padding-large"><i class="fa fa-twitter"></i> <span class="w3-hide-medium w3-hide-small">Twitter</span></button>
-      
-      <button onclick="WAshare()" style="outline:none;" class="w3-btn w3-green w3-round-large w3-padding-large"><i class="fa fa-whatsapp"></i> <span class="w3-hide-medium w3-hide-small">WhatsApp</span></button>
-      
-      <button onclick="Emailshare()" style="outline:none;" class="w3-btn w3-gray w3-round-large w3-text-white w3-padding-large"><i class="fa fa-envelope"></i> <span class="w3-hide-medium w3-hide-small">Email</span></button>
-      
-      
-       </div> 
-
-<!-- share options end-->
-
-    <div class="w3-container w3-hide-medium w3-hide-small w3-margin w3-center w3-padding">
+  <div class="w3-container w3-hide-large w3-margin w3-center w3-padding">
     <hr/>
-      <a href="{% url 'browse' %}?search={{ data.tags }}" class="w3-button w3-round-xxlarge w3-section w3-grey w3-text-white w3-hover-light-grey">{{ data.tags }}</a>
-    <hr/> 
+    <a href="{% url 'browse' %}?search={{ data.tags }}" class="w3-button w3-round-xxlarge w3-section w3-grey w3-text-white w3-hover-light-grey">{{ data.tags }}</a>
+    <hr/>
+  </div>
+  
+  <div class="w3-container w3-margin w3-padding">
+
+    <div class="w3-bar w3-black">
+      <button class="w3-bar-item w3-button tablink w3-green" onclick="relatedtab(event,'related')">Related</button>
+      <button class="w3-bar-item w3-button tablink" onclick="relatedtab(event,'more')">More from Baley</button>
+    </div>
+      
+    <div id="related" class="w3-container w3-border tab">
+
+      <section class="w3-container w3-section" id="photos">
+        {% for item in related %}
+    
+          <div class="w3-display-container" style="margin-top: 5px;">
+            <div class="img-container">
+    
+              <a href="{% url 'single' item.user.username item.slug %}">
+                <img src="{{ item.image.url }}">
+              </a>
+    
+              <div class="w3-display-bottomleft w3-display-hover w3-margin">
+                <a href="/photobay" class="w3-text-white" style="text-decoration: none;"> <i class="fa fa-user"></i> {{ item.user.username }}</a>
+              </div>
+    
+              <div class="w3-display-bottomright w3-display-hover w3-margin">
+                <span class="w3-text-white"> <i class="fa fa-heart"></i> {{ item.like_set.all.count }}</span>
+              </div>
+    
+            </div>
+          </div>
+    
+        {% endfor %}
+      </section>
+
     </div>
 
-</div>
-  
-  <!--photo end-->
-  
-  <!--sidebar -->
+    <div id="more" class="w3-container w3-border tab" style="display:none">
 
-  <div class="w3-col s12 m12 l4">
-
- <div class="w3-container w3-mobile w3-padding w3-card w3-section">
-            <a href="" class="w3-hover-opacity w3-margin" style="text-decoration:none;">
-            
-           <img src="images/img_avatar4.png" class="w3-circle" style="width:15%">
-           
-            </a>
-            
-            <a href="" class="w3-xlarge w3-hover-text-grey" style="text-decoration:none;">
-            
-           Baley Sarkar
-           
-            </a>
-            
-            <div class="w3-container w3-section" style="width:100%">
-                
-                <button class="w3-btn w3-round w3-green w3-padding" style="width:45%">Donate</button>
-                <span class="w3-padding" style="width:45%">456 Photos</span>
-                
+      <section class="w3-container w3-section" id="photos">
+        {% for item in author %}
+    
+          <div class="w3-display-container" style="margin-top: 5px;">
+            <div class="img-container">
+    
+              <a href="{% url 'single' item.user.username item.slug %}">
+                <img src="{{ item.image.url }}">
+              </a>
+    
+              <div class="w3-display-bottomleft w3-display-hover w3-margin">
+                <a href="/photobay" class="w3-text-white" style="text-decoration: none;"> <i class="fa fa-user"></i> {{ item.user.username }}</a>
+              </div>
+    
+              <div class="w3-display-bottomright w3-display-hover w3-margin">
+                <span class="w3-text-white"> <i class="fa fa-heart"></i> {{ item.like_set.all.count }}</span>
+              </div>
+    
             </div>
-            
-            
-            
-            
-            
-            
-            <div class="w3-container w3-round-xxlarge w3-border w3-padding-large w3-center w3-gray" style="margin-top: 40px; margin-bottom:40px;" style="width:100%">
-                
-                <a href="#" style="width:45%;" class="w3-button w3-white w3-hover-red w3-round w3-hover-text-white w3-text-black" title="Report"> <i class="fa fa-heart"></i> Like</a>  
-                
-                <a href="#" style="width:45%;" class="w3-button w3-white w3-hover-green w3-round w3-hover-text-white w3-text-black" title="Report"> <i class="fa fa-save"></i> Save</a> 
-                
-            </div>
-            
-            
-            
-            
-            <div class="w3-container w3-border w3-padding-large w3-section" style="width:100%">
-                <form action="#">
-                <input type="radio" name="quality" value="high" class="w3-radio"> 1280 X 1440 <span class="w3-text-red w3-small w3-hide-small">High Quality</span>
-                <hr/>
-                <input type="radio" name="quality" value="original" class="w3-radio" required> 2424 X 2500 <span class="w3-text-red w3-small w3-hide-small">Original Quality</span>
-                <hr/>
-                <button type="submit" class="w3-btn w3-round w3-green w3-padding" style="width:100%; outline:none;">Download</button>
-                </form>
-            </div>
-            
-            <div class="w3-container w3-padding-large w3-section" style="width:100%">
-                <span><b>All Details:</b></span>
-                        <table class="w3-table w3-bordered">
-                            <tr>
-                              <td>Type</td>
-                              <td>JPG</td>
-                            </tr>
-                            
-                            <tr>
-                              <td>Date</td>
-                              <td>2020/2/2</td>
-                            </tr>
-                            
-                              <tr>
-                              <td>Camera</td>
-                              <td>Canon 5D</td>
-                            </tr>
-                            
-                              <tr>
-                              <td>Location</td>
-                              <td>Kathmandu</td>
-                            </tr>
-                            
-                            <tr>
-                              <td>Views</td>
-                              <td>24</td>
-                            </tr>
-                            
-                            
-                            <tr>
-                              <td>Likes</td>
-                              <td>24</td>
-                            </tr>
-                            
-                            
-                            <tr>
-                              <td>Downloads</td>
-                              <td>32</td>
-                            </tr>
-                            
-                          </table>
-                       </div>
-        </div>
-
-
+          </div>
+    
+        {% endfor %}
+      </section>
+  
+    </div>
+        
   </div>
-  
-  <!-- sidebar end -->
-
-</div>
-
-<!-- real things end -->
-
-
-<!-- cats -->  
-  
-  
-<div class="w3-container w3-hide-large w3-margin w3-center w3-padding">
-   
-   
-<span class="w3-button w3-round-xxlarge w3-section w3-grey w3-text-white w3-hover-light-grey"> Tiger </span>
-   
-    <span class="w3-button w3-round-xxlarge w3-section w3-grey w3-text-white w3-hover-light-grey"> Tiger </span>
-    <span class="w3-button w3-round-xxlarge w3-section w3-grey w3-text-white w3-hover-light-grey"> Tiger </span>
-    <span class="w3-button w3-round-xxlarge w3-section w3-grey w3-text-white w3-hover-light-grey"> Tiger </span>
-    <span class="w3-button w3-round-xxlarge w3-section w3-grey w3-text-white w3-hover-light-grey"> Tiger </span>
-    <span class="w3-button w3-round-xxlarge w3-section w3-grey w3-text-white w3-hover-light-grey"> Tiger </span>
-    <span class="w3-button w3-round-xxlarge w3-section w3-grey w3-text-white w3-hover-light-grey"> Tiger </span>
-    <span class="w3-button w3-round-xxlarge w3-section w3-grey w3-text-white w3-hover-light-grey"> Tiger </span>
-    <span class="w3-button w3-round-xxlarge w3-section w3-grey w3-text-white w3-hover-light-grey"> Tiger </span>
-    <span class="w3-button w3-round-xxlarge w3-section w3-grey w3-text-white w3-hover-light-grey"> Tiger </span>
-    <span class="w3-button w3-round-xxlarge w3-section w3-grey w3-text-white w3-hover-light-grey"> Tiger </span>
-    <span class="w3-button w3-round-xxlarge w3-section w3-grey w3-text-white w3-hover-light-grey"> Tiger </span>
-    <span class="w3-button w3-round-xxlarge w3-section w3-grey w3-text-white w3-hover-light-grey"> Tiger </span>
-    <span class="w3-button w3-round-xxlarge w3-section w3-grey w3-text-white w3-hover-light-grey"> Tiger </span>
-
-   
-
-    
-</div>
-  
-  <!-- cats end -->
-
-
-
-<!--related photos -->
-  
-<div class="w3-container w3-margin w3-padding">
- 
-
-      <div class="w3-bar w3-black">
-  
-    <button class="w3-bar-item w3-button tablink w3-green" onclick="relatedtab(event,'related')">Related</button>
-    
-    <button class="w3-bar-item w3-button tablink" onclick="relatedtab(event,'more')">More from Baley</button>
-    
-  </div>
-  
-  <div id="related" class="w3-container w3-border tab">
-  
-
-     <!-- related images -->
-<div class="w3-row-padding" id="myGrid" style="margin-top:20px; margin-bottom:40px">
-   
-     <div class="w3-third">
-   
-    <div class="w3-display-container w3-opacity-min w3-hover-opacity-off">
-       <a href="#"><img class="w3-card" src="images/coffee.jpg" style="width:100%"></a>
-       
-       <div class="w3-display-bottomleft w3-display-hover w3-margin">
-       <a href="#" class="w3-button w3-round w3-white"><i class="fa fa-user"></i> Baley Sarkar</a>
-       </div>
-       
-       <div class="w3-display-bottomright w3-hide-medium w3-display-hover w3-margin">
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-red w3-text-red" style="cursor:auto;"> <i class="fa fa-heart"></i>  24</span>
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-green w3-text-green" style="cursor:auto;"> <i class="fa fa-download"></i>  27</span>    
-       </div>
-       
-   </div>
-      </div>
-           <div class="w3-third">
-   
-    <div class="w3-display-container w3-opacity-min w3-hover-opacity-off">
-       <a href="#"><img class="w3-card" src="images/coffee.jpg" style="width:100%"></a>
-       
-       <div class="w3-display-bottomleft w3-display-hover w3-margin">
-       <a href="#" class="w3-button w3-round w3-white"><i class="fa fa-user"></i> Baley Sarkar</a>
-       </div>
-       
-       <div class="w3-display-bottomright w3-hide-medium w3-display-hover w3-margin">
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-red w3-text-red" style="cursor:auto;"> <i class="fa fa-heart"></i>  24</span>
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-green w3-text-green" style="cursor:auto;"> <i class="fa fa-download"></i>  27</span>    
-       </div>
-       
-   </div>
-      </div>
-           <div class="w3-third">
-   
-    <div class="w3-display-container w3-opacity-min w3-hover-opacity-off">
-       <a href="#"><img class="w3-card" src="images/coffee.jpg" style="width:100%"></a>
-       
-       <div class="w3-display-bottomleft w3-display-hover w3-margin">
-       <a href="#" class="w3-button w3-round w3-white"><i class="fa fa-user"></i> Baley Sarkar</a>
-       </div>
-       
-       <div class="w3-display-bottomright w3-hide-medium w3-display-hover w3-margin">
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-red w3-text-red" style="cursor:auto;"> <i class="fa fa-heart"></i>  24</span>
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-green w3-text-green" style="cursor:auto;"> <i class="fa fa-download"></i>  27</span>    
-       </div>
-       
-   </div>
-      </div>
-   
-   
-      </div>
-   
-   <!-- related images end -->
-   
-   
-   
-    
-  </div>
-
-  <div id="more" class="w3-container w3-border tab" style="display:none">
-  
-  
-  <!-- author images -->
-<div class="w3-row-padding" id="myGrid" style="margin-top:20px; margin-bottom:40px">
-   
-     <div class="w3-third">
-   
-    <div class="w3-display-container w3-opacity-min w3-hover-opacity-off">
-       <a href="#"><img class="w3-card" src="images/coffee.jpg" style="width:100%"></a>
-       
-       <div class="w3-display-bottomright w3-display-hover w3-margin">
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-red w3-text-red" style="cursor:auto;"> <i class="fa fa-heart"></i>  24</span>
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-green w3-text-green" style="cursor:auto;"> <i class="fa fa-download"></i>  27</span>    
-       </div>
-       
-   </div>
-      </div>
-           <div class="w3-third">
-   
-    <div class="w3-display-container w3-opacity-min w3-hover-opacity-off">
-       <a href="#"><img class="w3-card" src="images/coffee.jpg" style="width:100%"></a>
-
-       <div class="w3-display-bottomright w3-display-hover w3-margin">
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-red w3-text-red" style="cursor:auto;"> <i class="fa fa-heart"></i>  24</span>
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-green w3-text-green" style="cursor:auto;"> <i class="fa fa-download"></i>  27</span>    
-       </div>
-       
-   </div>
-      </div>
-           <div class="w3-third">
-   
-    <div class="w3-display-container w3-opacity-min w3-hover-opacity-off">
-       <a href="#"><img class="w3-card" src="images/coffee.jpg" style="width:100%"></a>
-
-       <div class="w3-display-bottomright w3-display-hover w3-margin">
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-red w3-text-red" style="cursor:auto;"> <i class="fa fa-heart"></i>  24</span>
-       <span class="w3-button w3-white w3-round w3-hover-white w3-hover-text-green w3-text-green" style="cursor:auto;"> <i class="fa fa-download"></i>  27</span>    
-       </div>
-       
-   </div>
-      </div>
-   
-   
-      </div>
-   
-   <!-- author images end -->
-   
-    
-  </div>
-    
-    
-    
-    
-</div>
-  
-
-<!--related -->
-
-
 
 </div>
 

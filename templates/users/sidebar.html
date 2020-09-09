@@ -10,6 +10,21 @@
     {% else %}
       <p class="w3-center"><img src="{% static 'images/img_avatar4.png' %}" class="w3-circle" style="width:30%"></p>
     {% endif %}
+
+    {% if request.user.fb_username or request.user.tw_username or request.user.in_username %}
+      <div class="w3-container w3-section">
+        {% if request.user.fb_username %}
+          <a href="https://www.facebook.com/{{ request.user.fb_username }}" style="text-decoration: none;" class="w3-button w3-indigo w3-round-large w3-padding-large w3-hover-red"><i class="fa fa-facebook"></i></a>
+        {% endif %}
+        {% if request.user.tw_username %}
+          <a href="https://www.twitter.com/{{ request.user.tw_username }}" style="text-decoration: none;" class="w3-button w3-blue w3-round-large w3-text-white w3-padding-large w3-hover-red"><i class="fa fa-twitter"></i></a>
+        {% endif %}
+        {% if request.user.in_username %}
+          <a href="https://www.instagram.com/{{ request.user.tw_username }}" style="text-decoration: none;" class="w3-button w3-pale-red w3-round-large w3-padding-large w3-hover-red"><i class="fa fa-instagram"></i></a>
+        {% endif %}
+      </div>
+    {% endif %}
+
     <hr/>
 
     <p><i class="fa fa-envelope w3-margin-right"></i> {{ request.user.email }}</p>

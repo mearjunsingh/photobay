@@ -52,7 +52,9 @@ def single_page_view(request, username, slug):
     data = get_object_or_404(Photo, user__username=username, slug=slug, active=True)
     data.views_count += 1
     data.save()
-    return render(request, 'single.html', {'data' : data})
+    author = Photo.objects.filter(user__username=username).filter(active=True).order_by('-uploaded_on')[:4]
+    related = Photo.objects.filter(category=data.category).filter(active=True).order_by('-uploaded_on')[:4]
+    return render(request, 'single.html', {'data' : data, 'author' : author, 'related' : related})
 
 #completed
 def profile_public_page_view(request, username):
