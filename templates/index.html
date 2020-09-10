@@ -35,7 +35,7 @@
     <section class="w3-container w3-section" id="photos">
         {% for item in data %}
     
-          <div class="w3-display-container" style="margin-top: 5px;">
+          <div class="w3-display-container" style="margin-bottom: 5px;">
             <div class="img-container">
     
               <a href="{% url 'single' item.user.username item.slug %}">
@@ -43,7 +43,7 @@
               </a>
     
               <div class="w3-display-bottomleft w3-display-hover w3-margin">
-                <a href="/photobay" class="w3-text-white" style="text-decoration: none;"> <i class="fa fa-user"></i> {{ item.user.username }}</a>
+                <a href="{% url 'public_profile' item.user.username %}" class="w3-text-white" style="text-decoration: none;"> <i class="fa fa-user"></i> {{ item.user.username }}</a>
               </div>
     
               <div class="w3-display-bottomright w3-display-hover w3-margin">

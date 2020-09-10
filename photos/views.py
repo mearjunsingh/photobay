@@ -58,5 +58,19 @@ def single_page_view(request, username, slug):
 
 #completed
 def profile_public_page_view(request, username):
-    data = get_object_or_404(User, username=username, is_active=True)
-    return render(request, 'users/userpublic.html', {'data' : data})
+    person = get_object_or_404(User, username=username, is_active=True)
+    home = get_object_or_404(Photo, id=12)
+    photos_list = Photo.objects.filter(active=True).filter(user=person).order_by('-uploaded_on')
+    b_url = '?'
+    if photos_list.count() != 0:
+        paginator = Paginator(photos_list, 20)
+        if 'page' in request.GET:
+            q = request.GET['page']
+            if q is not None and q != '' and q != '0':
+                page_number = request.GET.get('page')
+            else:
+                page_number = 1
+        else:
+            page_number = 1
+        data = paginator.get_page(page_number)
+    return render(request, 'users/userpublic.html', {'home' : home, 'person' : person, 'data' : data, 'base_url' : b_url})
