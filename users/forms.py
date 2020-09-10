@@ -1,5 +1,7 @@
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm, PasswordChangeForm
 from django import forms
+from PIL import Image
+from .custom_defs import crop_max_square
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
@@ -130,6 +132,17 @@ class UserEditForm(UserChangeForm):
     class Meta:
         model = User
         fields = ['profile_picture','first_name', 'last_name', 'email', 'profession', 'address', 'dob', 'fb_username', 'tw_username', 'in_username']
+    
+    def save(self):
+        photo = super(UserEditForm, self).save()
+
+        image = Image.open(photo.profile_picture)
+        cropped_image = crop_max_square(image)
+        resized_image = cropped_image.resize((500, 500), Image.ANTIALIAS)
+        resized_image.save(photo.profile_picture.path)
+
+        return photo
+
 
 #completed
 class ChangePasswordForm(PasswordChangeForm):

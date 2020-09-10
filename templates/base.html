@@ -42,7 +42,13 @@
 
         {% if request.user.is_authenticated %}
             <a href="{% url 'dashboard' %}" class="w3-bar-item w3-btn w3-hover-opacity w3-right">
-                <img class="w3-circle" src="{% static 'images/img_avatar4.png' %}" style="height:30px;">
+
+                {% if request.user.profile_picture %}
+                    <img class="w3-circle" src="{{ request.user.profile_picture.url }}" style="height:30px;">
+                {% else %}
+                    <img class="w3-circle" src="{% static 'images/img_avatar4.png' %}" style="height:30px;">
+                {% endif %}
+                
                 Dashboard
             </a>
         {% else %}
