@@ -8,7 +8,7 @@ import uuid
 def upload_image_path(instance, filename):
     ext = filename.split('.')[-1]
     filename = '%s.%s' % (uuid.uuid4(), ext)
-    return '{0}/{1}'.format(instance.user.username, filename)
+    return 'users/{0}/{1}'.format(instance.user.username, filename)
 
 
 class Photo(models.Model):
@@ -20,6 +20,7 @@ class Photo(models.Model):
     camera = models.ForeignKey('Camera', on_delete=models.CASCADE)
     location = models.ForeignKey('Location', on_delete=models.CASCADE)
     tags = models.TextField()
+    description = models.TextField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     active = models.BooleanField(default=True)
     download_count = models.IntegerField(default=0)
@@ -48,6 +49,7 @@ class Category(models.Model):
 class Camera(models.Model):
     camera = models.CharField(max_length=254, unique=True)
     slug = models.SlugField(unique=True)
+    image = models.ImageField(upload_to='cameras', null=True, blank=True)
 
     def __str__(self):
         return self.camera
@@ -56,6 +58,7 @@ class Camera(models.Model):
 class Location(models.Model):
     location = models.CharField(max_length=254, unique=True)
     slug = models.SlugField(unique=True)
+    image = models.ImageField(upload_to='locations', null=True, blank=True)
 
     def __str__(self):
         return self.location

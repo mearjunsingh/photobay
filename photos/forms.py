@@ -18,6 +18,14 @@ class UploadForm(forms.ModelForm):
             'class': 'w3-input w3-border w3-margin-bottom',
             }
         ))
+    description = forms.CharField(label='Description', widget=forms.Textarea(
+        attrs={
+            'class': 'w3-input w3-border w3-margin-bottom',
+            'placeholder': 'Image Description',
+            'cols' : '0',
+            'rows' : '3',
+            }
+        ))
     photo_camera = forms.CharField(label='Camera', widget=forms.TextInput(
         attrs={
             'class': 'w3-input w3-border w3-margin-bottom',
@@ -41,7 +49,7 @@ class UploadForm(forms.ModelForm):
 
     class Meta:
         model = Photo
-        fields = ['title', 'category', 'image', 'photo_camera', 'photo_location','tags']
+        fields = ['title', 'category', 'image', 'description', 'photo_camera', 'photo_location','tags']
     
     def clean_photo_camera(self):
         data = self.cleaned_data.get('photo_camera')
@@ -70,6 +78,14 @@ class EditForm(forms.ModelForm):
             'class': 'w3-input w3-border w3-margin-bottom',
             }
         ))
+    description = forms.CharField(label='Description', widget=forms.Textarea(
+        attrs={
+            'class': 'w3-input w3-border w3-margin-bottom',
+            'placeholder': 'Image Description',
+            'cols' : '0',
+            'rows' : '3',
+            }
+        ))
     photo_camera = forms.CharField(label='Camera', widget=forms.TextInput(
         attrs={
             'class': 'w3-input w3-border w3-margin-bottom',
@@ -93,7 +109,7 @@ class EditForm(forms.ModelForm):
 
     class Meta:
         model = Photo
-        fields = ['title', 'category', 'photo_camera', 'photo_location','tags']
+        fields = ['title', 'category', 'description', 'photo_camera', 'photo_location','tags']
     
     def clean_photo_camera(self):
         data = self.cleaned_data.get('photo_camera')

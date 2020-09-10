@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Photo
 from django.core.paginator import Paginator
 from django.db.models import Q
+import re
 from django.contrib.auth import get_user_model
 User = get_user_model()
 # Create your views here.
@@ -52,9 +53,11 @@ def single_page_view(request, username, slug):
     data = get_object_or_404(Photo, user__username=username, slug=slug, active=True)
     data.views_count += 1
     data.save()
+    image_tags = data.tags
+    image_tags = re.split(', |,', image_tags)
     author = Photo.objects.filter(user__username=username).filter(active=True).order_by('-uploaded_on')[:4]
     related = Photo.objects.filter(category=data.category).filter(active=True).order_by('-uploaded_on')[:4]
-    return render(request, 'single.html', {'data' : data, 'author' : author, 'related' : related})
+    return render(request, 'single.html', {'image_tags' : image_tags, 'data' : data, 'author' : author, 'related' : related})
 
 #completed
 def profile_public_page_view(request, username):

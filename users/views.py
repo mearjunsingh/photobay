@@ -146,6 +146,7 @@ def edit_page_view(request, slug):
         param = {
             'title' : instance.title,
             'category' : instance.category,
+            'description' : instance.description,
             'photo_camera' : instance.camera,
             'photo_location' : instance.location,
             'tags' : instance.tags

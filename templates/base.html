@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,107 +8,90 @@
     
     <link rel="stylesheet" href="{% static 'css/w3.css' %}">
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
-    <link rel="stylesheet" href="{% static 'css/flex-images.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-    <script src="{% static 'js/flex-images.min.js' %}" type="text/javascript"></script>
 </head>
 <body>
 
-<!-- Navbar -->
-<div class="w3-top">
-   <div class="w3-bar w3-black w3-card">
-      <div class="w3-container">
-      
-      <a class="w3-bar-item w3-button w3-padding-large w3-hide-large w3-left" href="javascript:void(0)" onclick="mobileNav()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
-      
-      <a href="/" class="w3-bar-item w3-padding"><img src="{% static 'images/logo.png' %}" alt="PN"/></a>
+    <div class="w3-top">
+    <div class="w3-bar w3-black w3-card">
+        <div class="w3-container">
+            <a class="w3-bar-item w3-button w3-padding-large w3-hide-large w3-left" href="javascript:void(0)" onclick="mobileNav()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
 
-      {% for cat in cat_menu %}
-        <a href="{% url 'browse' %}?category={{ cat.slug }}" class="w3-bar-item w3-button w3-padding-large w3-hide-small w3-hide-medium">{{ cat|upper }}</a>
-      {% endfor %}
+            <a href="/" class="w3-bar-item w3-padding"><img src="{% static 'images/logo.png' %}" alt="PN"/></a>
 
-      <div class="w3-dropdown-click w3-hide-small w3-left">
-       <button onclick="explore()" class="w3-padding-large w3-button" style="outline:none;" title="More">EXPLORE <i class="fa fa-caret-down"></i></button>
-       <div id="explore" class="w3-dropdown-content w3-bar-block w3-card-4">
-       
-           <a href="{% url 'camera' %}" class="w3-bar-item w3-button">Cameras</a>
-           <a href="{% url 'artists' %}" class="w3-bar-item w3-button">Artists</a>
-           <a href="{% url 'location' %}" class="w3-bar-item w3-button">Locations <span class="w3-badge w3-red w3-small">New</span> </a>
-       
+            <a href="{% url 'camera' %}" class="w3-bar-item w3-button w3-padding-large w3-hide-small w3-hide-medium">CAMERAS</a>
+            <a href="{% url 'location' %}" class="w3-bar-item w3-button w3-padding-large w3-hide-small w3-hide-medium">LOCATIONS</a>
+            <a href="{% url 'artists' %}" class="w3-bar-item w3-button w3-padding-large w3-hide-small w3-hide-medium">ARTISTS</a>
+
+            <div class="w3-dropdown-click w3-hide-small w3-left">
+                <button onclick="explore()" class="w3-padding-large w3-button" style="outline:none;" title="More">CATEGORIES <i class="fa fa-caret-down"></i></button>
+
+                <div id="explore" class="w3-dropdown-content w3-bar-block w3-card-4">
+                    {% for cat in cat_menu %}
+                        <a href="{% url 'browse' %}?category={{ cat.slug }}" class="w3-bar-item w3-button">{{ cat|upper }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'dashboard' %}" class="w3-bar-item w3-btn w3-hover-opacity w3-right">
+
+                    {% if request.user.profile_picture %}
+                        <img class="w3-circle" src="{{ request.user.profile_picture.url }}" style="height:30px;">
+                    {% else %}
+                        <img class="w3-circle" src="{% static 'images/img_avatar4.png' %}" style="height:30px;">
+                    {% endif %}
+                    
+                    Dashboard
+                </a>
+            {% else %}
+                <a href="{% url 'signup' %}" class="w3-bar-item w3-button w3-padding-large w3-right">Sign Up</a>
+                <a href="{% url 'login' %}" class="w3-bar-item w3-button w3-padding-large w3-right">Log In</a>
+            {% endif %}
+
         </div>
         </div>
 
-        {% if request.user.is_authenticated %}
-            <a href="{% url 'dashboard' %}" class="w3-bar-item w3-btn w3-hover-opacity w3-right">
-
-                {% if request.user.profile_picture %}
-                    <img class="w3-circle" src="{{ request.user.profile_picture.url }}" style="height:30px;">
-                {% else %}
-                    <img class="w3-circle" src="{% static 'images/img_avatar4.png' %}" style="height:30px;">
-                {% endif %}
-                
-                Dashboard
-            </a>
-        {% else %}
-            <a href="{% url 'signup' %}" class="w3-bar-item w3-button w3-padding-large w3-right">Sign Up</a>
-            <a href="{% url 'login' %}" class="w3-bar-item w3-button w3-padding-large w3-right">Log In</a>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="w3-container w3-display-container w3-center {% if message.tags %}{{ message.tags }}{% endif %}">
+                    <span onclick="this.parentElement.style.display='none'" class="w3-button w3-margin-right w3-display-right">&times;</span>
+                    <p>{{ message }}</p>
+                </div>
+            {% endfor %}
         {% endif %}
 
-     </div>
-   </div>
+    </div>
 
-    {% if messages %}
-        {% for message in messages %}
-            <div class="w3-container w3-display-container w3-center {% if message.tags %}{{ message.tags }}{% endif %}">
-                <span onclick="this.parentElement.style.display='none'" class="w3-button w3-margin-right w3-display-right">&times;</span>
-                <p>{{ message }}</p>
-            </div>
+    <div id="mobileNav" class="w3-bar-block w3-black w3-hide w3-hide-large w3-top" style="margin-top:46px">
+        <a href="{% url 'camera' %}" class="w3-bar-item w3-button w3-padding-large">CAMERAS</a>
+        <a href="{% url 'location' %}" class="w3-bar-item w3-button w3-padding-large">LOCATIONS</a>
+        <a href="{% url 'artists' %}" class="w3-bar-item w3-button w3-padding-large">ARTISTS</a>
+
+        <hr class="w3-hide-medium"/>
+
+        {% for cat in cat_menu %}
+            <a href="{% url 'browse' %}?category={{ cat.slug }}" class="w3-bar-item w3-button w3-padding-large w3-hide-medium">{{ cat|upper }}</a>
         {% endfor %}
-    {% endif %}
+    </div>
 
-</div>
-<!-- Navbar End -->
+    {% block content %}
 
-<!-- mobile navbar -->
-<div id="mobileNav" class="w3-bar-block w3-black w3-hide w3-hide-large w3-top" style="margin-top:46px">
- 
- <a href="#" class="w3-bar-item w3-button w3-padding-large" onclick="mobileNav()">LANDSCAPE</a>
- <a href="#" class="w3-bar-item w3-button w3-padding-large" onclick="mobileNav()">OBJECT</a>
- <a href="#" class="w3-bar-item w3-button w3-padding-large" onclick="mobileNav()">PEOPLE</a>
- <a href="#" class="w3-bar-item w3-button w3-padding-large" onclick="mobileNav()">ARCHITECTURE</a>
- <hr class="w3-hide-medium"/>
- <a href="#" class="w3-bar-item w3-button w3-padding-large w3-hide-medium" onclick="mobileNav()">Cameras</a>
- <a href="#" class="w3-bar-item w3-button w3-padding-large  w3-hide-medium" onclick="mobileNav()">Artists</a>
- <a href="#" class="w3-bar-item w3-button w3-padding-large  w3-hide-medium" onclick="mobileNav()">Locations <span class="w3-badge w3-red w3-small">New</span> </a>
-      
-</div>
-<!-- mobile navbar end -->
+    {% endblock %}
 
+    <footer class="w3-container w3-padding w3-light-grey w3-center w3-xlarge"> 
+        <p class="w3-medium">
 
+            Made with <i class="fa fa-heart w3-text-red"></i> from NEPAL <br/>
+            &copy; 2020 - <span id="footeryear"></span> |
+            <a class="w3-text-green w3-hover-text-red" style="text-decoration:none;" href="">Terms and Policy</a> |
+            All Rights Reserved.
 
-{% block content %}{% endblock %}
+        </p>
+    </footer>
 
-
-
-
-
-   <!--footer-->
-   <footer class="w3-container w3-padding w3-light-grey w3-center w3-xlarge"> 
-
-    <p class="w3-medium">
+    <script src="{% static 'js/script.js' %}" type="text/javascript"></script>
         
-        Made with <i class="fa fa-heart w3-text-red"></i> from NEPAL <br/>
-        &copy; 2019 - <span id="footeryear"></span> | <a class="w3-text-green w3-hover-text-red" style="text-decoration:none;" href="">Terms and Conditions</a> | <a class="w3-text-green w3-hover-text-red" style="text-decoration:none;" href="">Privacy Policy</a> | All Rights Reserved.
-        
-    </p>
-  
-  </footer>
-  <!--footer end-->
-  
-      
-      <script src="{% static 'js/script.js' %}" type="text/javascript"></script>
-     
-      
-  </body>
-  </html>
+</body>
+</html>
