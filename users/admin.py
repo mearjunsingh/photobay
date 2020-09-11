@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import UserProfile
+from .models import UserProfile, BannedUsernames
 from .forms import UserSignupForm
 
 
@@ -33,3 +33,4 @@ class MyUserAdmin(UserAdmin):
 
 
 admin.site.register(UserProfile, MyUserAdmin)
+admin.site.register(BannedUsernames)

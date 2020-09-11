@@ -1,9 +1,10 @@
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Photo
+from .models import Photo, Like, Save
 from django.core.paginator import Paginator
 from django.db.models import Q
 import re
+from django.contrib import messages
 from django.contrib.auth import get_user_model
 User = get_user_model()
 # Create your views here.
@@ -53,6 +54,26 @@ def single_page_view(request, username, slug):
     data = get_object_or_404(Photo, user__username=username, slug=slug, active=True)
     data.views_count += 1
     data.save()
+    if 'like' in request.POST:
+        if request.user.is_authenticated:
+            like = Like.objects.filter(user=request.user, photo=data)
+            if like.exists():
+                like.delete()
+            else:
+                temp = Like(user=request.user, photo=data)
+                temp.save()
+        else:
+            messages.error(request, 'You must login first.')
+    if 'save' in request.POST:
+        if request.user.is_authenticated:
+            save = Save.objects.filter(user=request.user, photo=data)
+            if save.exists():
+                save.delete()
+            else:
+                temp2 = Save(user=request.user, photo=data)
+                temp2.save()
+        else:
+            messages.error(request, 'You must login first.')
     image_tags = data.tags
     image_tags = re.split(', |,', image_tags)
     author = Photo.objects.filter(user__username=username).filter(active=True).order_by('-uploaded_on')[:4]

@@ -20,3 +20,9 @@ class UserProfile(AbstractUser):
     fb_username = models.CharField(max_length=254, blank=True)
     tw_username = models.CharField(max_length=254, blank=True)
     in_username = models.CharField(max_length=254, blank=True)
+
+class BannedUsernames(models.Model):
+    uname = models.CharField(max_length=254)
+
+    def __str__(self):
+        return self.uname

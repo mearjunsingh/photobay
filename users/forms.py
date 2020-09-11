@@ -1,6 +1,7 @@
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm, PasswordChangeForm
 from django import forms
 from PIL import Image
+from .models import BannedUsernames
 from .custom_defs import crop_max_square
 from django.contrib.auth import get_user_model
 User = get_user_model()
@@ -61,6 +62,15 @@ class UserSignupForm(UserCreationForm):
             'placeholder': 'Enter Password Again',
             }
         ))
+
+    def clean_username(self):
+        data = self.cleaned_data['username']
+        inv = BannedUsernames.objects.all()
+        for vn in inv:
+            temp, temp2 = data.lower(), vn.uname.lower()
+            if temp == temp2:
+                raise forms.ValidationError("You cannot use this username.")
+        return data
 
     class Meta:
         model = User
