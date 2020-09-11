@@ -40,7 +40,7 @@
                     {% if request.user.profile_picture %}
                         <img class="w3-circle" src="{{ request.user.profile_picture.url }}" style="height:30px;">
                     {% else %}
-                        <img class="w3-circle" src="{% static 'images/img_avatar4.png' %}" style="height:30px;">
+                        <img class="w3-circle" src="{% static 'images/user_blank.png' %}" style="height:30px;">
                     {% endif %}
                     
                     Dashboard

@@ -17,6 +17,7 @@ class UserProfile(AbstractUser):
     profession = models.CharField(max_length=254, blank=True)
     address = models.CharField(max_length=254, blank=True)
     dob = models.DateField(blank=True, null=True)
+    donate = models.CharField(max_length=254, blank=True)
     fb_username = models.CharField(max_length=254, blank=True)
     tw_username = models.CharField(max_length=254, blank=True)
     in_username = models.CharField(max_length=254, blank=True)

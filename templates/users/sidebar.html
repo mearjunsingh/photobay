@@ -8,7 +8,7 @@
     {% if request.user.profile_picture %}
       <p class="w3-center"><img src="{{ request.user.profile_picture.url }}" class="w3-circle" style="width:30%"></p>
     {% else %}
-      <p class="w3-center"><img src="{% static 'images/img_avatar4.png' %}" class="w3-circle" style="width:30%"></p>
+      <p class="w3-center"><img src="{% static 'images/user_blank.png' %}" class="w3-circle" style="width:30%"></p>
     {% endif %}
 
     {% if request.user.fb_username or request.user.tw_username or request.user.in_username %}
