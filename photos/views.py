@@ -1,6 +1,6 @@
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Photo, Like, Save
+from .models import Photo, Like, Save, Camera, Location
 from django.core.paginator import Paginator
 from django.db.models import Q
 import re
@@ -23,14 +23,19 @@ def browse_page_view(request):
         photos_list = Photo.objects.filter(active=True).filter(
                 Q(title__icontains = search_term) | 
                 Q(tags__icontains = search_term) | 
-                Q(category__category__icontains = search_term) | 
-                Q(user__username__icontains = search_term) | 
-                Q(camera__camera__icontains = search_term) | 
-                Q(location__location__icontains = search_term)).order_by('-uploaded_on')
+                Q(description__icontains = search_term)).order_by('-uploaded_on')
     elif 'category' in request.GET:
         search_term = request.GET.get('category')
         b_url = '?category=' + search_term + '&'
         photos_list = Photo.objects.filter(active=True).filter(category__slug=search_term).order_by('-uploaded_on')
+    elif 'camera' in request.GET:
+        search_term = request.GET.get('camera')
+        b_url = '?camera=' + search_term + '&'
+        photos_list = Photo.objects.filter(active=True).filter(camera__slug=search_term).order_by('-uploaded_on')
+    elif 'location' in request.GET:
+        search_term = request.GET.get('location')
+        b_url = '?location=' + search_term + '&'
+        photos_list = Photo.objects.filter(active=True).filter(location__slug=search_term).order_by('-uploaded_on')
     else:
         b_url = '?'
         photos_list = Photo.objects.filter(active=True).order_by('-uploaded_on')
@@ -98,3 +103,54 @@ def profile_public_page_view(request, username):
             page_number = 1
         data = paginator.get_page(page_number)
     return render(request, 'users/userpublic.html', {'home' : home, 'person' : person, 'data' : data, 'base_url' : b_url})
+
+#completed
+def cameras_page_view(request):
+    data_list = Camera.objects.all()
+    b_url = '?'
+    if data_list.count() != 0:
+        paginator = Paginator(data_list, 20)
+        if 'page' in request.GET:
+            q = request.GET['page']
+            if q is not None and q != '' and q != '0':
+                page_number = request.GET.get('page')
+            else:
+                page_number = 1
+        else:
+            page_number = 1
+        data = paginator.get_page(page_number)
+    return render(request, 'explore_camera.html', {'data' : data, 'base_url' : b_url})
+
+#completed
+def artists_page_view(request):
+    data_list = User.objects.filter(is_active=True)
+    b_url = '?'
+    if data_list.count() != 0:
+        paginator = Paginator(data_list, 20)
+        if 'page' in request.GET:
+            q = request.GET['page']
+            if q is not None and q != '' and q != '0':
+                page_number = request.GET.get('page')
+            else:
+                page_number = 1
+        else:
+            page_number = 1
+        data = paginator.get_page(page_number)
+    return render(request, 'explore_users.html', {'data' : data, 'base_url' : b_url})
+
+#completed
+def locations_page_view(request):
+    data_list = Location.objects.all()
+    b_url = '?'
+    if data_list.count() != 0:
+        paginator = Paginator(data_list, 20)
+        if 'page' in request.GET:
+            q = request.GET['page']
+            if q is not None and q != '' and q != '0':
+                page_number = request.GET.get('page')
+            else:
+                page_number = 1
+        else:
+            page_number = 1
+        data = paginator.get_page(page_number)
+    return render(request, 'explore_location.html', {'data' : data, 'base_url' : b_url})

@@ -10,7 +10,7 @@
     <div class="w3-bar w3-light-grey w3-round w3-padding">
         <div class="w3-container w3-section">
             <form action="{% url 'browse' %}" method="get">
-                <input type="search" name="search" class="w3-input w3-left w3-border" placeholder="Search photos, categories, tags, cameras, locations or users..." style="width:70%; outline:none;" required {% if request.GET.search %}value="{{ request.GET.search }}"{% endif %}>
+                <input type="search" name="search" class="w3-input w3-left w3-border" placeholder="Search photos..." style="width:70%; outline:none;" required {% if request.GET.search %}value="{{ request.GET.search }}"{% endif %}>
                 <button class="w3-button w3-green w3-right w3-hover-red" type="submit" style="width:30%; height:41px; outline:none;">Search <i class="fa fa-search"></i></button>
             </form>
         </div>
@@ -32,6 +32,10 @@
         </div>
       </div>
 
+      <div class="w3-container w3-margin w3-border w3-round w3-padding">
+        {{ data.description }}
+      </div>
+
       <div class="w3-section w3-center w3-mobile">
         <span class=" w3-hide-small">Share: </span>
 
@@ -39,10 +43,6 @@
         <button onclick="TTshare()" style="outline:none;" class="w3-button w3-blue w3-round-large w3-text-white w3-padding-large w3-hover-red"><i class="fa fa-twitter"></i> <span class="w3-hide-medium w3-hide-small">Twitter</span></button>
         <button onclick="WAshare()" style="outline:none;" class="w3-button w3-green w3-round-large w3-padding-large w3-hover-red"><i class="fa fa-whatsapp"></i> <span class="w3-hide-medium w3-hide-small">WhatsApp</span></button>
         <button onclick="Emailshare()" style="outline:none;" class="w3-button w3-gray w3-round-large w3-text-white w3-padding-large w3-hover-red"><i class="fa fa-envelope"></i> <span class="w3-hide-medium w3-hide-small">Email</span></button>
-      </div>
-      
-      <div class="w3-container w3-margin w3-border w3-round w3-padding">
-        {{ data.description }}
       </div>
 
     </div>
@@ -135,7 +135,7 @@
 
     <div class="w3-bar w3-black">
       <button class="w3-bar-item w3-button tablink w3-green" onclick="relatedtab(event,'related')">Related</button>
-      <button class="w3-bar-item w3-button tablink" onclick="relatedtab(event,'more')">More from Baley</button>
+      <button class="w3-bar-item w3-button tablink" onclick="relatedtab(event,'more')">More from {{ data.user.first_name }}</button>
     </div>
       
     <div id="related" class="w3-container w3-border tab">

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Photobay - Beautiful Photos by Motivated Photographers{% endblock %}
+{% block title %}Browse Beautiful Photos by Motivated Photographers - Photobay{% endblock %}
 
 {% block content %} {% load static %}
 
@@ -10,19 +10,23 @@
         <div class="w3-bar w3-light-grey w3-round w3-padding">
             <div class="w3-container w3-section">
                 <form action="." method="get">
-                    <input type="search" name="search" class="w3-input w3-left w3-border" placeholder="Search photos, categories, tags, cameras, locations or users..." style="width:70%; outline:none;" required {% if request.GET.search %}value="{{ request.GET.search }}"{% endif %}>
+                    <input type="search" name="search" class="w3-input w3-left w3-border" placeholder="Search photos..." style="width:70%; outline:none;" required {% if request.GET.search %}value="{{ request.GET.search }}"{% endif %}>
                     <button class="w3-button w3-green w3-right w3-hover-red" type="submit" style="width:30%; height:41px; outline:none;">Search <i class="fa fa-search"></i></button>
                 </form>
 
-                {% if request.GET.search %}
+                {% if request.GET.search or request.GET.category or request.GET.camera or request.GET.location %}
                 <span class="w3-container">
-                    <strong>Search resuts:</strong> {{ request.GET.search }} <a href="{% url 'browse' %}" class="w3-text-red" style="text-decoration: none; margin-left: 20px;"><i class="fa fa-remove"></i> clear</a>
-                </span>
-                {% endif %}
-
-                {% if request.GET.category %}
-                <span class="w3-container">
-                    <strong>Category resuts:</strong> {{ request.GET.category }} <a href="{% url 'browse' %}" class="w3-text-red" style="text-decoration: none; margin-left: 20px;"><i class="fa fa-remove"></i> clear</a>
+                    {% if request.GET.search %}
+                      <strong>Search resuts:</strong> {{ request.GET.search }}
+                    {% elif request.GET.category %}
+                      <strong>Category resuts:</strong> {{ request.GET.category }}
+                    {% elif request.GET.camera %}
+                      <strong>Camera resuts:</strong> {{ request.GET.camera }}
+                    {% elif request.GET.location %}
+                      <strong>Location resuts:</strong> {{ request.GET.location }}
+                    {% endif %}
+                      
+                    <a href="{% url 'browse' %}" class="w3-text-red" style="text-decoration: none; margin-left: 20px;"><i class="fa fa-remove"></i> clear</a>
                 </span>
                 {% endif %}
             </div>
@@ -90,6 +94,26 @@
         {% endif %}
 
       </div>
+    </div>
+  {% endif %}
+
+  {% if no_posts_found %}
+    <div class="w3-container w3-card w3-round w3-border w3-pale-red w3-margin">
+      <p>No photos found. You can search photos by its,
+        <ul>
+          <li>Title</li>
+          <li>Tags</li>
+          <li>description</li>
+        </ul>
+        or browse through menus to search by
+        <ul>
+          <li>Category</li>
+          <li>Camera</li>
+          <li>Location</li>
+          <li>Users</li>
+          
+        </ul>
+      </p>
     </div>
   {% endif %}
 

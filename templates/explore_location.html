@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Explore Locations : Photobay{% endblock %}
+
+{% block content %} {% load static %}
+
+<div class="w3-content" style="margin-top:65px; max-width:1500px">
+<div class="w3-container w3-padding w3-center" style="margin-left: 20px;">
+
+    <div class="w3-row">
+
+        {% for item in data %} <a href="{% url 'browse' %}?location={{ item.slug }}">
+            <div class="w3-card w3-col l2 m3 s4 w3-margin">
+
+                {% if item.image %}
+                    <img src="{{ item.image.url }}"  style="width:100%">
+                {% else %}
+                    <img src="{% static 'images/img_avatar4.png' %}"  style="width:100%">
+                {% endif %}
+
+                <div class="w3-container w3-center">
+                    <p>{{ item.location }}</p>
+                </div>
+
+            </div> 
+        </a> {% endfor %}
+
+    </div>
+
+</div>
+</div>
+
+{% endblock %}

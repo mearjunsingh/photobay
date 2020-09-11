@@ -13,7 +13,7 @@
         <h3 class="w3-hide-large w3-hide-medium" style="width:350px;">Stunning images by Motivated photographers</h3>
 
         <form action="{% url 'browse' %}" method="get">
-          <input type="search" name="search" class="w3-input w3-left w3-border" placeholder="Search photos, categories, tags, cameras, locations or users..." style="width:70%; outline:none;" required {% if request.GET.search %}value="{{ request.GET.search }}"{% endif %}>
+          <input type="search" name="search" class="w3-input w3-left w3-border" placeholder="Search photos..." style="width:70%; outline:none;" required {% if request.GET.search %}value="{{ request.GET.search }}"{% endif %}>
           <button class="w3-button w3-green w3-right w3-hover-red" type="submit" style="width:30%; height:41px; outline:none;">Search <i class="fa fa-search"></i></button>
         </form>
 

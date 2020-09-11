@@ -42,21 +42,18 @@
 
   <div class="w3-card w3-round w3-section">
 
-    <button style="outline:none;" onclick="user_acc('not')" class="w3-button w3-block w3-left-align w3-light-grey"><i class="fa fa-bell w3-margin-right"></i> My Notifications <span class="w3-circle w3-small w3-badge w3-red">1</span></button>
-    <div id="not" class="w3-hide w3-container">
-      <p>{{ request.user.fb_username }}</p>
-    </div>
-
-    <button style="outline:none;" onclick="user_acc('liked')" class="w3-button w3-block w3-left-align w3-light-grey"><i class="fa fa-heart w3-margin-right"></i> I Liked <span class="w3-circle w3-small w3-badge w3-green">{{ request.user.like_set.count }}</span></button>
+    <button style="outline:none;" onclick="user_acc('liked')" class="w3-button w3-block w3-left-align w3-light-grey"><i class="fa fa-heart w3-margin-right"></i> I Liked <span class="w3-circle w3-small w3-badge w3-red">{{ request.user.like_set.count }}</span></button>
     <div id="liked" class="w3-hide w3-container">
       {% for like in request.user.like_set.all %}
-      <p><a style="text-decoration: none;" class="w3-link w3-text-green w3-hover-text-red" href="{% url 'single' like.photo.user like.photo.slug %}">{{ like.photo }}</a></p>
+      <p><a style="text-decoration: none;" class="w3-link w3-text-red w3-hover-text-green" href="{% url 'single' like.photo.user like.photo.slug %}">{{ like.photo }}</a></p>
       {% endfor %}
     </div>
 
-    <button style="outline:none;" onclick="user_acc('saved')" class="w3-button w3-block w3-left-align w3-light-grey"><i class="fa fa-save w3-margin-right"></i> I Saved <span class="w3-circle w3-small w3-badge w3-green">34</span></button>
+    <button style="outline:none;" onclick="user_acc('saved')" class="w3-button w3-block w3-left-align w3-light-grey"><i class="fa fa-save w3-margin-right"></i> I Saved <span class="w3-circle w3-small w3-badge w3-green">{{ request.user.save_set.count }}</span></button>
     <div id="saved" class="w3-hide w3-container">
-      <p>{{ request.user.in_username }}</p>
+      {% for save in request.user.save_set.all %}
+      <p><a style="text-decoration: none;" class="w3-link w3-text-green w3-hover-text-red" href="{% url 'single' save.photo.user save.photo.slug %}">{{ save.photo }}</a></p>
+      {% endfor %}
     </div>
 
   </div>
