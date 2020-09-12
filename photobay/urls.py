@@ -37,10 +37,15 @@ urlpatterns = [
     path('logout/', logout_page_view, name='logout'),
     path('signup/', signup_page_view, name='signup'),
     path('dashboard/', include('users.urls')),
-    path('admin/', admin.site.urls),
+    path('photobay-admin/', admin.site.urls),
     path('<str:username>/', profile_public_page_view, name='public_profile'),
     path('<str:username>/<str:slug>/', single_page_view, name='single'),
 ]
 
 if settings.DEBUG:
      urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+admin.site.site_header = 'Photobay Admin Panel'
+admin.site.site_title = 'Photobay'
+admin.site.index_title = "Photobay's Database"
