@@ -153,7 +153,6 @@ class UserEditForm(UserChangeForm):
 
         return photo
 
-
 #completed
 class ChangePasswordForm(PasswordChangeForm):
     old_password = forms.CharField(label='Old Password', widget=forms.PasswordInput(

@@ -23,7 +23,6 @@ class Photo(models.Model):
     description = models.TextField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     active = models.BooleanField(default=True)
-    save_count = models.IntegerField(default=0)
     views_count = models.IntegerField(default=0)
     modified_on = models.DateTimeField(auto_now=True)
     uploaded_on = models.DateTimeField(auto_now_add=True)
@@ -67,7 +66,6 @@ class Location(models.Model):
 class Like(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     photo = models.ForeignKey('Photo', on_delete=models.CASCADE)
-    active = models.BooleanField(default=True)
 
     def __str__(self):
         p_user = self.user.username
@@ -78,7 +76,6 @@ class Like(models.Model):
 class Save(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     photo = models.ForeignKey('Photo', on_delete=models.CASCADE)
-    active = models.BooleanField(default=True)
 
     def __str__(self):
         p_user = self.user.username

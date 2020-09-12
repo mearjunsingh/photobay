@@ -6,7 +6,7 @@ import uuid
 def upload_image_path(instance, filename):
     ext = filename.split('.')[-1]
     filename = '%s.%s' % (uuid.uuid4(), ext)
-    return '{0}/images/{1}'.format(instance.username, filename)
+    return 'users/{0}/images/{1}'.format(instance.username, filename)
 
 
 class UserProfile(AbstractUser):

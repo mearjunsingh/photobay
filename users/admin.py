@@ -11,7 +11,7 @@ class MyUserAdmin(UserAdmin):
     list_display = ('username', 'is_staff', 'is_active',)
     list_filter = ('is_staff', 'is_active',)
     fieldsets = UserAdmin.fieldsets + (
-            ('Personal_info', {'fields': ('profile_picture', 'profession', 'address', 'dob', 'fb_username', 'tw_username', 'in_username')}),
+            ('Personal_info', {'fields': ('profile_picture', 'profession', 'address', 'dob', 'donate', 'fb_username', 'tw_username', 'in_username')}),
     )
     # # (
     #     (None, {'fields': ('email', 'password')}),

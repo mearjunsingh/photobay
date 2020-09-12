@@ -88,7 +88,7 @@ def single_page_view(request, username, slug):
 #completed
 def profile_public_page_view(request, username):
     person = get_object_or_404(User, username=username, is_active=True)
-    home = get_object_or_404(Photo, id=12)
+    home = get_object_or_404(Photo, id=6)
     photos_list = Photo.objects.filter(active=True).filter(user=person).order_by('-uploaded_on')
     b_url = '?'
     if photos_list.count() != 0:
@@ -102,11 +102,13 @@ def profile_public_page_view(request, username):
         else:
             page_number = 1
         data = paginator.get_page(page_number)
-    return render(request, 'users/userpublic.html', {'home' : home, 'person' : person, 'data' : data, 'base_url' : b_url})
+        return render(request, 'users/userpublic.html', {'home' : home, 'person' : person, 'data' : data, 'base_url' : b_url})
+    else:
+        return render(request, 'users/userpublic.html', {'home' : home, 'person' : person, 'no_posts_found' : True, 'base_url' : b_url})
 
 #completed
 def cameras_page_view(request):
-    data_list = Camera.objects.all()
+    data_list = Camera.objects.all().order_by('camera')
     b_url = '?'
     if data_list.count() != 0:
         paginator = Paginator(data_list, 20)
@@ -123,7 +125,7 @@ def cameras_page_view(request):
 
 #completed
 def artists_page_view(request):
-    data_list = User.objects.filter(is_active=True)
+    data_list = User.objects.filter(is_active=True).order_by('-date_joined')
     b_url = '?'
     if data_list.count() != 0:
         paginator = Paginator(data_list, 20)
@@ -140,7 +142,7 @@ def artists_page_view(request):
 
 #completed
 def locations_page_view(request):
-    data_list = Location.objects.all()
+    data_list = Location.objects.all().order_by('location')
     b_url = '?'
     if data_list.count() != 0:
         paginator = Paginator(data_list, 20)

@@ -32,7 +32,7 @@
                  <a href="https://www.twitter.com/{{ person.tw_username }}" style="text-decoration: none;" class="w3-button w3-tiny w3-blue w3-round-large w3-text-white w3-hover-green"><i class="fa fa-twitter"></i></a>
                {% endif %}
                {% if person.in_username %}
-                 <a href="https://www.instagram.com/{{ person.tw_username }}" style="text-decoration: none;" class="w3-button w3-tiny w3-red w3-round-large w3-hover-green"><i class="fa fa-instagram"></i></a>
+                 <a href="https://www.instagram.com/{{ person.in_username }}" style="text-decoration: none;" class="w3-button w3-tiny w3-red w3-round-large w3-hover-green"><i class="fa fa-instagram"></i></a>
                {% endif %}
             </div>
          {% endif %}
@@ -141,6 +141,20 @@
       </div>
     </div>
   {% endif %}
+
+  {% if no_posts_found %}
+  <div class="w3-container w3-card w3-round w3-border w3-pale-red w3-margin">
+    <p>Seems like this user has no photos uploaded. What you can do:
+      <ul>
+        <li>Go to home page</li>
+        <li>Go to browse page</li>
+        <li>Search for photos</li>
+        <li>Browse through menu</li>
+        
+      </ul>
+    </p>
+  </div>
+{% endif %}
 
 </div>
 

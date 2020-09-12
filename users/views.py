@@ -174,7 +174,6 @@ def deactivate_profile_page_view(request):
         likes = request.user.like_set.all()
         data.is_active = False
         photos.update(active=False)
-        likes.update(active=False)
         data.save()
         messages.error(request, 'Profile deactivated successfully.')
         return redirect('index')

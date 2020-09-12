@@ -70,7 +70,7 @@
                 <div class="w3-container w3-section">
                     <button id="delete_button" class="w3-btn w3-block w3-red w3-section w3-padding w3-round" onclick="toggle_delete()" type="button">Deactivate Profile</button>
                     <div id="delete_confirm" class="w3-container w3-pale-red" style="visibility: hidden;">
-                        <p>Are you sure you want to deactivate this profile? <br> All your photos and likes will be inactive.</p>
+                        <p>Are you sure you want to deactivate this profile? <br> All your photos pages will be inactive but we cannot remove direct link shares.</p>
                         <form action="{% url 'deactivate_profile' %}" method="post">
                             {% csrf_token %}
                             <button class="w3-btn w3-block w3-red w3-section w3-padding w3-round" type="submit">Deactivate</button>
