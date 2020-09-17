@@ -1,7 +1,10 @@
 from django.utils.text import slugify
 from photos.models import Camera, Location
 from django.shortcuts import get_object_or_404
-
+from PIL import Image
+from PIL.ExifTags import TAGS
+import uuid
+import os
 
 def unique_slug(table, word):
     original = slugify(word)
@@ -32,6 +35,26 @@ def get_or_create_object(data, table):
             return data_obj
     else:
         return None
+
+
+def get_exif_data(file):
+    img = Image.open(file)
+    info = img._getexif()
+    exif = {}
+    for tag, value in info.items():
+        decoded = TAGS.get(tag, tag)
+        exif[decoded] = value
+    return exif
+
+
+def rename_on_delete(img):
+    old_image_path = img.path
+    ext = img.name.split('.')[-1]
+    user = img.name.split('/')[1]
+    filename = '%s.%s' % (uuid.uuid4(), ext)
+    img.name = 'users/{0}/{1}'.format(user, filename)
+    os.rename(old_image_path, img.path)
+    return img
 
 
 def crop_center(pil_img, crop_width, crop_height):

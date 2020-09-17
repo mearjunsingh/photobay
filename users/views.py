@@ -6,7 +6,7 @@ from django.http import Http404
 from django.contrib.auth.decorators import login_required
 from photos.forms import UploadForm, EditForm
 from photos.models import Photo, Camera, Location
-from .custom_defs import unique_slug, get_or_create_object
+from .custom_defs import unique_slug, get_or_create_object, rename_on_delete
 from django.core.paginator import Paginator
 from django.db.models import Q
 User = get_user_model()
@@ -123,6 +123,7 @@ def delete_page_view(request):
     if request.method == 'POST':
         data = get_object_or_404(Photo, slug=request.POST.get('slug'), user=request.user, active=True)
         data.active = False
+        data.image = rename_on_delete(data.image)
         data.save()
         messages.error(request, 'Photo deleted successfully.')
         return redirect('dashboard')
