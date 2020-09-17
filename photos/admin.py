@@ -1,16 +1,30 @@
 from django.contrib import admin
 from . import models
+from django.contrib import messages
+from django.utils.translation import ngettext
 
 
 def active(modeladmin, request, queryset):
-    queryset.update(active=True)
+    updated = queryset.update(active=True)
+    messages.success(request, ngettext(
+            '%d photo was successfully activated.',
+            '%d photos were successfully activated.',
+            updated,
+        ) % updated)
 
 active.short_description = "Activate selected photos"
+active.allowed_permissions = ('change',)
 
 def deactive(modeladmin, request, queryset):
-    queryset.update(active=False)
+    updated = queryset.update(active=False)
+    messages.success(request, ngettext(
+            '%d photo was successfully deactivated.',
+            '%d photos were successfully deactivated.',
+            updated,
+        ) % updated)
 
 deactive.short_description = "Deactivate selected photos"
+deactive.allowed_permissions = ('change',)
 
 
 @admin.register(models.Photo)
@@ -21,6 +35,8 @@ class PhotoAdmin(admin.ModelAdmin):
     list_filter = ['active', 'category', 'camera', 'location']
     search_fields = ['title', 'user__username']
     actions = [active, deactive]
+    list_per_page = 100
+    sortable_by = ['modified_on', 'uploaded_on', 'views_count']
     date_hierarchy = 'uploaded_on'
     prepopulated_fields = {'slug' : ('title',)}
     fieldsets = (

@@ -22,8 +22,12 @@ class UserProfile(AbstractUser):
     tw_username = models.CharField(max_length=254, blank=True)
     in_username = models.CharField(max_length=254, blank=True)
 
+
 class BannedUsernames(models.Model):
     uname = models.CharField(max_length=254)
+
+    class Meta:
+        verbose_name_plural = 'Banned Usernames'
 
     def __str__(self):
         return self.uname

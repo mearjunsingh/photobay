@@ -1,0 +1,57 @@
+* {
+    font-family:"Segoe UI",Arial,sans-serif;
+}
+
+#header {
+    height: 50px;
+    background: #000;
+    color: #fff;
+    font-weight:400;
+  }
+  
+#branding h1 a {
+    color: #fff !important;
+  }
+  
+a:link, a:visited {
+    color:#000;
+  }
+
+a:hover {
+    color: #f44336;
+}
+  
+div.breadcrumbs {
+    background: #4CAF50;
+    color: #fff;
+  }
+  
+div.breadcrumbs a {
+    color: #fff;
+  }
+  
+.module h2, .module caption, .inline-group h2 {
+    background: #4CAF50;
+  }
+  
+.button, input[type=submit].default, input[type=submit], input[type=button], .submit-row input, a.button {
+    background: #4CAF50;
+    color: #fff;
+  }
+
+.button:hover, input[type=submit].default:hover, input[type=submit]:hover, input[type=button]:hover, .submit-row input:hover, a.button:hover {
+    background: #f44336;
+  }
+
+a.deletelink {
+      background-color: #f44336;
+  }
+
+a.historylink:hover, a.historylink:active {
+      background-color: gray;
+  }
+
+a.addlink:hover,  a.addlink:active {
+      background-color: #f44336;
+      color: #fff;
+  }

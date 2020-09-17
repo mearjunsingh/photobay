@@ -1,18 +1,31 @@
 from django.contrib import admin
 from . import models
 from django.contrib.auth.admin import UserAdmin
-# from .models import UserProfile, BannedUsernames
 from .forms import UserSignupForm, UserEditForm
+from django.contrib import messages
+from django.utils.translation import ngettext
 
 def active(modeladmin, request, queryset):
-    queryset.update(is_active=True)
+    updated = queryset.update(is_active=True)
+    messages.success(request, ngettext(
+            '%d user was successfully activated.',
+            '%d users were successfully activated.',
+            updated,
+        ) % updated)
 
 active.short_description = "Activate selected users"
+active.allowed_permissions = ('change',)
 
 def deactive(modeladmin, request, queryset):
-    queryset.update(is_active=False)
+    updated = queryset.update(is_active=False)
+    messages.success(request, ngettext(
+            '%d user was successfully deactivated.',
+            '%d users were successfully deactivated.',
+            updated,
+        ) % updated)
 
 deactive.short_description = "Deactivate selected users"
+deactive.allowed_permissions = ('change',)
 
 
 @admin.register(models.UserProfile)
@@ -22,6 +35,8 @@ class MyUserAdmin(UserAdmin):
     list_editable = ['is_active']
     list_filter = ['is_active', 'profession', 'address']
     search_fields = ['username', 'first_name', 'last_name', 'email']
+    list_per_page = 100
+    sortable_by = ['date_joined']
     actions = [active, deactive]
     date_hierarchy = 'date_joined'
     add_form = UserSignupForm
