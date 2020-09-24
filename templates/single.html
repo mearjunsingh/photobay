@@ -88,8 +88,7 @@
           <button class="w3-button w3-round w3-green w3-padding w3-hover-red" style="width:45%">Donate</button>
           <span class="w3-padding" style="width:45%">{{ data.user.photo_set.all.count }} Photos</span>
         </div>          
-              
-        <div class="w3-container w3-round-xxlarge w3-border w3-padding-large w3-center w3-gray" style="margin-top: 40px; margin-bottom:40px;" style="width:100%">
+        <div class="w3-container w3-round-xxlarge w3-border w3-padding-large w3-center w3-gray" style="margin-top: 40px; margin-bottom:40px; width:100%;">
 
           <form style="display: inline;" action="." method="post"> {% csrf_token %}
             <input type="hidden" name="like">
