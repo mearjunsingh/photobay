@@ -7,7 +7,7 @@ import re
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 User = get_user_model()
-from users.custom_defs import get_exif_data
+#from users.custom_defs import get_exif_data
 # Create your views here.
 
 #completed
@@ -60,6 +60,10 @@ def single_page_view(request, username, slug):
     data = get_object_or_404(Photo, user__username=username, slug=slug, active=True)
     data.views_count += 1
     data.save()
+    liked, saved = False, False
+    if request.user.is_authenticated:
+    	liked = True if data.like_set.filter(user=request.user).count() > 0 else False
+    	saved = True if data.save_set.filter(user=request.user).count() > 0 else False
     if 'like' in request.POST:
         if request.user.is_authenticated:
             like = Like.objects.filter(user=request.user, photo=data)
@@ -82,13 +86,13 @@ def single_page_view(request, username, slug):
             messages.error(request, 'You must login first.')
     image_tags = data.tags
     image_tags = re.split(', |,', image_tags)
-    try:
-        exif = get_exif_data(data.image)
-    except:
-        exif = None
+    #try:
+    #    exif = get_exif_data(data.image)
+    #except:
+    #    exif = None
     author = Photo.objects.filter(user__username=username).filter(active=True).order_by('-uploaded_on')[:4]
     related = Photo.objects.filter(category=data.category).filter(active=True).order_by('-uploaded_on')[:4]
-    return render(request, 'single.html', {'image_tags' : image_tags, 'data' : data, 'author' : author, 'related' : related, 'exif' : exif})
+    return render(request, 'single.html', {'image_tags' : image_tags, 'data' : data, 'liked' : liked, 'saved' : saved, 'author' : author, 'related' : related})#, 'exif' : exif})
 
 #completed
 def profile_public_page_view(request, username):

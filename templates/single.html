@@ -6,222 +6,225 @@
 
 <div class="w3-content" style="margin-top:65px; max-width:1500px">
 
-  <div class="w3-container">
-    <div class="w3-bar w3-light-grey w3-round w3-padding">
-        <div class="w3-container w3-section">
-            <form action="{% url 'browse' %}" method="get">
-                <input type="search" name="search" class="w3-input w3-left w3-border" placeholder="Search photos..." style="width:70%; outline:none;" required {% if request.GET.search %}value="{{ request.GET.search }}"{% endif %}>
-                <button class="w3-button w3-green w3-right w3-hover-red" type="submit" style="width:30%; height:41px; outline:none;">Search <i class="fa fa-search"></i></button>
-            </form>
-        </div>
-    </div>
-  </div>
+	<div class="w3-container">
+		<div class="w3-bar w3-light-grey w3-round w3-padding">
+			<div class="w3-container w3-section">
+				<form action="{% url 'browse' %}" method="get">
+					<input type="search" name="search" class="w3-input w3-left w3-border" placeholder="Search photos..." style="width:70%; outline:none;" required {% if request.GET.search %}value="{{ request.GET.search }}"{% endif %}>
+					<button class="w3-button w3-green w3-right w3-hover-red" type="submit" style="width:30%; height:41px; outline:none;">Search <i class="fa fa-search"></i></button>
+				</form>
+			</div>
+		</div>
+	</div>
 
-  <div class="w3-container">
-    <h2 class="w3-text-red w3-padding-small">{{ data.title }}</h2>
-  </div>
+	<div class="w3-container">
+		<h2 class="w3-text-red w3-padding-small">{{ data.title }}</h2>
+	</div>
 
-  <div class="w3-row-padding w3-margin">
-    <div class="w3-col s12 m12 l8">
+	<div class="w3-row-padding w3-margin">
+		<div class="w3-col s12 m12 l8">
 
-      <div class="w3-display-container w3-center">
-        <img src="{{ data.image.url }}" style="width:100%" class="w3-mobile w3-round w3-border w3-padding w3-card w3-image">
+			<div class="w3-display-container w3-center">
+				<img src="{{ data.image.url }}" style="width:100%" class="w3-mobile w3-round w3-border w3-padding w3-card w3-image">
 
-        <div class="w3-display-topright" style="margin:30px;">
-          <a href="#" class="w3-btn w3-white w3-round w3-hover-text-black w3-text-grey" title="Report"> <i class="fa fa-flag"></i></a>  
-        </div>
-      </div>
+				<div class="w3-display-topright" style="margin:30px;">
+					<a href="#" class="w3-btn w3-white w3-round w3-hover-text-black w3-text-grey" title="Report"> <i class="fa fa-flag"></i></a>
+				</div>
+			</div>
 
-      <div class="w3-container w3-margin w3-border w3-round w3-padding">
-        
-        {{ data.description }}
-        
-        <hr> <u><strong>For Meta Nerds:</strong></u> <br>
-        <small>
+			<div class="w3-container w3-margin w3-border w3-round w3-padding">
 
-          {% if exif != None %}
-            <table width="100%">
-              <tr>
-                <th align="left" width="50%">Meta Title</th>
-                <th align="left" width="50%">Meta Value</th>
-              </tr>
-              {% for key, value in exif.items %}
-                <tr>
-                  <td>{{ key }}</td>
-                  <td>{{ value }}</td>
-                </tr>
-              {% endfor %}
-            </table>
-          {% else %}
-            No data available.
-          {% endif %}
+				{{ data.description }}
 
-        </small>
+				<!-- <hr> <u><strong>For Meta Nerds:</strong></u> <br>
+								<small>
 
-      </div>
+									{% if exif != None %}
+									<table width="100%">
+										<tr>
+											<th align="left" width="50%">Meta Title</th>
+											<th align="left" width="50%">Meta Value</th>
+										</tr>
+										{% for key, value in exif.items %}
+										<tr>
+											<td>{{ key }}</td>
+											<td>{{ value }}</td>
+										</tr>
+										{% endfor %}
+									</table>
+									{% else %}
+									No data available.
+									{% endif %}
 
-      <div class="w3-section w3-center w3-mobile">
-        <span class=" w3-hide-small">Share: </span>
+								</small> -->
 
-        <button onclick="FBshare()" style="outline:none;" class="w3-small w3-button w3-indigo w3-round-large w3-padding-large w3-hover-red"><i class="fa fa-facebook"></i> <span class="w3-hide-small">Facebook</span></button>
-        <button onclick="TTshare()" style="outline:none;" class="w3-small w3-button w3-blue w3-round-large w3-text-white w3-padding-large w3-hover-red"><i class="fa fa-twitter"></i> <span class="w3-hide-small">Twitter</span></button>
-        <button onclick="WAshare()" style="outline:none;" class="w3-small w3-button w3-green w3-round-large w3-padding-large w3-hover-red"><i class="fa fa-whatsapp"></i> <span class="w3-hide-small">WhatsApp</span></button>
-        <button onclick="Emailshare()" style="outline:none;" class="w3-small w3-button w3-gray w3-round-large w3-text-white w3-padding-large w3-hover-red"><i class="fa fa-envelope"></i> <span class="w3-hide-small">Email</span></button>
-      </div>
+			</div>
 
-    </div>
-    <div class="w3-col s12 m12 l4">
+			<div class="w3-section w3-center w3-mobile">
+				<span class=" w3-hide-small">Share: </span>
 
-      <div class="w3-container w3-mobile w3-padding w3-card"> <br>
+				<button onclick="FBshare()" style="outline:none;" class="w3-small w3-button w3-indigo w3-round-large w3-padding-large w3-hover-red"><i class="fa fa-facebook"></i> <span class="w3-hide-small">Facebook</span></button>
+				<button onclick="TTshare()" style="outline:none;" class="w3-small w3-button w3-blue w3-round-large w3-text-white w3-padding-large w3-hover-red"><i class="fa fa-twitter"></i> <span class="w3-hide-small">Twitter</span></button>
+				<button onclick="WAshare()" style="outline:none;" class="w3-small w3-button w3-green w3-round-large w3-padding-large w3-hover-red"><i class="fa fa-whatsapp"></i> <span class="w3-hide-small">WhatsApp</span></button>
+				<button onclick="Emailshare()" style="outline:none;" class="w3-small w3-button w3-gray w3-round-large w3-text-white w3-padding-large w3-hover-red"><i class="fa fa-envelope"></i> <span class="w3-hide-small">Email</span></button>
+			</div>
 
-        <a href="{% url 'public_profile' data.user.username %}" class="w3-hover-opacity w3-margin" style="text-decoration:none;">
-          {% if data.user.profile_picture %}
-            <img src="{{ data.user.profile_picture.url }}" class="w3-circle" style="width:15%">
-          {% else %}
-            <img src="{% static 'images/user_blank.png' %}" class="w3-circle" style="width:15%">
-          {% endif %}
-        </a>
-              
-        <a href="{% url 'public_profile' data.user.username %}" class="w3-xlarge w3-hover-text-grey" style="text-decoration:none;">{{ data.user.first_name }} {{ data.user.last_name }}</a>
-              
-        <div class="w3-container w3-section" style="width:100%">
-          <button class="w3-button w3-round w3-green w3-padding w3-hover-red" style="width:45%">Donate</button>
-          <span class="w3-padding" style="width:45%">{{ data.user.photo_set.all.count }} Photos</span>
-        </div>          
-        <div class="w3-container w3-round-xxlarge w3-border w3-padding-large w3-center w3-gray" style="margin-top: 40px; margin-bottom:40px; width:100%;">
+		</div>
+		<div class="w3-col s12 m12 l4">
 
-          <form style="display: inline;" action="." method="post"> {% csrf_token %}
-            <input type="hidden" name="like">
-            {% if data.like_set.count >= 1 %}
-              <button type="submit" style="width:45%;" class="w3-button w3-round w3-red w3-hover-white w3-hover-text-black w3-text-white"><i class="fa fa-heart"></i> Unike</button>
-            {% else %}
-              <button type="submit" style="width:45%;" class="w3-button w3-round w3-white w3-hover-red w3-hover-text-white w3-text-black"><i class="fa fa-heart"></i> Like</button>
-            {% endif %}
-          </form>
+			<div class="w3-container w3-mobile w3-padding w3-card">
+				<br>
 
-          <form style="display: inline;" action="." method="post"> {% csrf_token %}
-            <input type="hidden" name="save">
-            {% if data.save_set.count >= 1 %}
-              <button type="submit" style="width:45%;" class="w3-button w3-round w3-green w3-hover-white w3-hover-text-black w3-text-white"><i class="fa fa-save"></i> Unsave</button>
-            {% else %}
-              <button type="submit" style="width:45%;" class="w3-button w3-white w3-hover-green w3-round w3-hover-text-white w3-text-black"><i class="fa fa-save"></i> Save</button>
-            {% endif %}
-          </form>
+				<a href="{% url 'public_profile' data.user.username %}" class="w3-hover-opacity w3-margin" style="text-decoration:none;">
+					{% if data.user.profile_picture %}
+					<img src="{{ data.user.profile_picture.url }}" class="w3-circle" style="width:15%">
+					{% else %}
+					<img src="{% static 'images/user_blank.png' %}" class="w3-circle" style="width:15%">
+					{% endif %}
+				</a>
 
-        </div>
-                 
-        <div class="w3-container w3-padding-large w3-section" style="width:100%">
-          <span><b>All Details:</b></span>
-          <table class="w3-table w3-bordered">
-            <tr>
-              <td>Type</td>
-              <td>{{ data.image_type }}</td>
-            </tr>
-            <tr>
-              <td>Resolution</td>
-              <td>{{ data.image.width }} X {{ data.image.height }}</td>
-            </tr>
-            <tr>
-              <td>Listed on</td>
-              <td>{{ data.uploaded_on }}</td>
-            </tr>
-            <tr>
-              <td>Camera</td>
-              <td>{{ data.camera }}</td>
-            </tr>
-            <tr>
-              <td>Location</td>
-              <td>{{ data.location }}</td>
-            </tr>
-            <tr>
-              <td>Views</td>
-              <td>{{ data.views_count }}</td>
-            </tr>
-            <tr>
-              <td>Likes</td>
-              <td>{{ data.like_set.all.count }}</td>
-            </tr>
-            <tr>
-              <td>Saves</td>
-              <td>{{ data.save_set.all.count }}</td>
-            </tr>
-          </table>
-        </div>
-      </div>
-    
-    </div>
-  </div>
+				<a href="{% url 'public_profile' data.user.username %}" class="w3-xlarge w3-hover-text-grey" style="text-decoration:none;">{{ data.user.first_name }} {{ data.user.last_name }}</a>
 
-  <div class="w3-container w3-margin w3-center w3-padding">
-    {% for tag in image_tags %}
-      <a href="{% url 'browse' %}?search={{ tag }}" class="w3-button w3-round-xxlarge w3-section w3-grey w3-text-white w3-hover-light-grey">{{ tag }}</a>
-    {% endfor %}
-  </div>
-  
-  <div class="w3-container w3-margin w3-padding">
+				<div class="w3-container w3-section" style="width:100%">
+					<button class="w3-button w3-round w3-green w3-padding w3-hover-red" style="width:45%">Donate</button>
+					<span class="w3-padding" style="width:45%">{{ data.user.photo_set.all.count }} Photos</span>
+				</div>
+				<div class="w3-container w3-round-xxlarge w3-border w3-padding-large w3-center w3-gray" style="margin-top: 40px; margin-bottom:40px; width:100%;">
 
-    <div class="w3-bar w3-black">
-      <button class="w3-bar-item w3-button tablink w3-green" onclick="relatedtab(event,'related')">Related</button>
-      <button class="w3-bar-item w3-button tablink" onclick="relatedtab(event,'more')">More from {{ data.user.first_name }}</button>
-    </div>
-      
-    <div id="related" class="w3-container w3-border tab">
+					<form style="display: inline;" action="." method="post">
+						{% csrf_token %}
+						<input type="hidden" name="like">
+						{% if liked %}
+						<button type="submit" style="width:45%;" class="w3-button w3-round w3-red w3-hover-white w3-hover-text-black w3-text-white"><i class="fa fa-heart"></i> Unike</button>
+						{% else %}
+						<button type="submit" style="width:45%;" class="w3-button w3-round w3-white w3-hover-red w3-hover-text-white w3-text-black"><i class="fa fa-heart"></i> Like</button>
+						{% endif %}
+					</form>
 
-      <section class="w3-container w3-section" id="photos">
-        {% for item in related %}
-    
-          <div class="w3-display-container" style="margin-bottom: 5px;">
-            <div class="img-container">
-    
-              <a href="{% url 'single' item.user.username item.slug %}">
-                <img src="{{ item.image.url }}">
-              </a>
-    
-              <div class="w3-display-bottomleft w3-display-hover w3-margin">
-                <a href="{% url 'public_profile' item.user.username %}" class="w3-text-white" style="text-decoration: none;"> <i class="fa fa-user"></i> {{ item.user.username }}</a>
-              </div>
-    
-              <div class="w3-display-bottomright w3-display-hover w3-margin">
-                <span class="w3-text-white"> <i class="fa fa-heart"></i> {{ item.like_set.all.count }}</span>
-              </div>
-    
-            </div>
-          </div>
-    
-        {% endfor %}
-      </section>
+					<form style="display: inline;" action="." method="post">
+						{% csrf_token %}
+						<input type="hidden" name="save">
+						{% if saved %}
+						<button type="submit" style="width:45%;" class="w3-button w3-round w3-green w3-hover-white w3-hover-text-black w3-text-white"><i class="fa fa-save"></i> Unsave</button>
+						{% else %}
+						<button type="submit" style="width:45%;" class="w3-button w3-white w3-hover-green w3-round w3-hover-text-white w3-text-black"><i class="fa fa-save"></i> Save</button>
+						{% endif %}
+					</form>
 
-    </div>
+				</div>
 
-    <div id="more" class="w3-container w3-border tab" style="display:none">
+				<div class="w3-container w3-padding-large w3-section" style="width:100%">
+					<span><b>All Details:</b></span>
+					<table class="w3-table w3-bordered">
+						<tr>
+							<td>Type</td>
+							<td>{{ data.image_type }}</td>
+						</tr>
+						<tr>
+							<td>Resolution</td>
+							<td>{{ data.image.width }} X {{ data.image.height }}</td>
+						</tr>
+						<tr>
+							<td>Listed on</td>
+							<td>{{ data.uploaded_on }}</td>
+						</tr>
+						<tr>
+							<td>Camera</td>
+							<td>{{ data.camera }}</td>
+						</tr>
+						<tr>
+							<td>Location</td>
+							<td>{{ data.location }}</td>
+						</tr>
+						<tr>
+							<td>Views</td>
+							<td>{{ data.views_count }}</td>
+						</tr>
+						<tr>
+							<td>Likes</td>
+							<td>{{ data.like_set.all.count }}</td>
+						</tr>
+						<tr>
+							<td>Saves</td>
+							<td>{{ data.save_set.all.count }}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
 
-      <section class="w3-container w3-section" id="photos">
-        {% for item in author %}
-    
-          <div class="w3-display-container" style="margin-bottom: 5px;">
-            <div class="img-container">
-    
-              <a href="{% url 'single' item.user.username item.slug %}">
-                <img src="{{ item.image.url }}">
-              </a>
-    
-              <div class="w3-display-bottomleft w3-display-hover w3-margin">
-                <a href="{% url 'public_profile' item.user.username %}" class="w3-text-white" style="text-decoration: none;"> <i class="fa fa-user"></i> {{ item.user.username }}</a>
-              </div>
-    
-              <div class="w3-display-bottomright w3-display-hover w3-margin">
-                <span class="w3-text-white"> <i class="fa fa-heart"></i> {{ item.like_set.all.count }}</span>
-              </div>
-    
-            </div>
-          </div>
-    
-        {% endfor %}
-      </section>
-  
-    </div>
-        
-  </div>
+		</div>
+	</div>
+
+	<div class="w3-container w3-margin w3-center w3-padding">
+		{% for tag in image_tags %}
+		<a href="{% url 'browse' %}?search={{ tag }}" class="w3-button w3-round-xxlarge w3-section w3-grey w3-text-white w3-hover-light-grey">{{ tag }}</a>
+		{% endfor %}
+	</div>
+
+	<div class="w3-container w3-margin w3-padding">
+
+		<div class="w3-bar w3-black">
+			<button class="w3-bar-item w3-button tablink w3-green" onclick="relatedtab(event,'related')">Related</button>
+			<button class="w3-bar-item w3-button tablink" onclick="relatedtab(event,'more')">More from {{ data.user.first_name }}</button>
+		</div>
+
+		<div id="related" class="w3-container w3-border tab">
+
+			<section class="w3-container w3-section" id="photos">
+				{% for item in related %}
+
+				<div class="w3-display-container" style="margin-bottom: 5px;">
+					<div class="img-container">
+
+						<a href="{% url 'single' item.user.username item.slug %}">
+							<img src="{{ item.image.url }}">
+						</a>
+
+						<div class="w3-display-bottomleft w3-display-hover w3-margin">
+							<a href="{% url 'public_profile' item.user.username %}" class="w3-text-white" style="text-decoration: none;"> <i class="fa fa-user"></i> {{ item.user.username }}</a>
+						</div>
+
+						<div class="w3-display-bottomright w3-display-hover w3-margin">
+							<span class="w3-text-white"> <i class="fa fa-heart"></i> {{ item.like_set.all.count }}</span>
+						</div>
+
+					</div>
+				</div>
+
+				{% endfor %}
+			</section>
+
+		</div>
+
+		<div id="more" class="w3-container w3-border tab" style="display:none">
+
+			<section class="w3-container w3-section" id="photos">
+				{% for item in author %}
+
+				<div class="w3-display-container" style="margin-bottom: 5px;">
+					<div class="img-container">
+
+						<a href="{% url 'single' item.user.username item.slug %}">
+							<img src="{{ item.image.url }}">
+						</a>
+
+						<div class="w3-display-bottomleft w3-display-hover w3-margin">
+							<a href="{% url 'public_profile' item.user.username %}" class="w3-text-white" style="text-decoration: none;"> <i class="fa fa-user"></i> {{ item.user.username }}</a>
+						</div>
+
+						<div class="w3-display-bottomright w3-display-hover w3-margin">
+							<span class="w3-text-white"> <i class="fa fa-heart"></i> {{ item.like_set.all.count }}</span>
+						</div>
+
+					</div>
+				</div>
+
+				{% endfor %}
+			</section>
+
+		</div>
+
+	</div>
 
 </div>
 
